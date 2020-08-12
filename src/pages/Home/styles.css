@@ -1,0 +1,49 @@
+nav {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  background-color: var(--header-color);
+  overflow: hidden;
+}
+
+nav a {
+  font: 700 1.5rem 'Roboto';
+  color: white;
+  text-decoration: none;
+  padding: 1.5rem;
+  transition: background-color 300ms;
+}
+nav a:hover {
+  background-color: var(--header-color-hover);
+}
+
+main {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-title {
+  font: 700 2.4rem 'Roboto Mono';
+  margin: 2rem auto;
+}
+
+.secondary-title {
+  font: 700 1.6rem 'Roboto Mono';
+  margin: 1.2rem auto;
+}
+
+.content-text {
+  font: 400 1.2rem 'Roboto Mono';
+}
