@@ -1,20 +1,12 @@
 import React from 'react';
+
 import './styles.css';
-import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
 
 function Home() {
   return (
     <>
-      <header>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-          </ul>
-          <Link to="/">Login</Link>
-        </nav>
-      </header>
+      <Header />
       <main className="container">
         <h1 className="main-title">IDL Manager</h1>
         <section>

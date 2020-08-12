@@ -137,3 +137,11 @@ body {
   --header-color: #5a5a8c;
   --header-color-hover: #46466d;
 }
+
+@media (min-width: 900px) {
+  #root {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
