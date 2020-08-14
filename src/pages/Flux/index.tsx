@@ -7,7 +7,7 @@ function Flux() {
   return (
     <>
       <Header />
-      <main className="container">
+      <main className="flux-content container">
         <h1 className="main-title">Controle de Caixa</h1>
         <section className="influx-section">
           <h2>Entradas:</h2>
@@ -18,7 +18,7 @@ function Flux() {
             <label>Nome</label>
             <input type="text" placeholder="Digite o nome da entrada." />
           </form>
-          <table>
+          <table className="influx-table entry-table">
             <thead>
               <tr>
                 <th>Horário</th>
@@ -55,7 +55,7 @@ function Flux() {
             <label>Nome</label>
             <input type="text" placeholder="Digite o nome da saida." />
           </form>
-          <table>
+          <table className="outflux-table entry-table">
             <thead>
               <tr>
                 <th>Horário</th>
