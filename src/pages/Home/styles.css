@@ -12,18 +12,3 @@ section {
   align-items: center;
   justify-content: center;
 }
-
-.main-title {
-  font: 700 2.4rem 'Roboto Mono';
-  margin: 2rem auto;
-}
-
-.secondary-title {
-  font: 700 1.6rem 'Roboto Mono';
-  margin: 0.6rem auto;
-}
-
-.content-text {
-  font: 400 1.2rem 'Roboto Mono';
-  margin: 0.6rem auto;
-}

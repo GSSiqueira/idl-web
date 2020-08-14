@@ -1,0 +1,47 @@
+main {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.main-title {
+  width: 70%;
+}
+
+table,
+label {
+  font: 400 1.2rem 'Roboto Mono';
+  margin: 0.6rem auto;
+}
+
+table tr {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+th,
+td {
+  padding: 0.5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'title title'
+      'influx outflux';
+  }
+
+  .influx-section {
+    grid-area: influx;
+  }
+
+  .outflux-section {
+    grid-area: outflux;
+  }
+
+  .main-title {
+    grid-area: title;
+  }
+}
