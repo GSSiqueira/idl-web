@@ -130,15 +130,16 @@ body {
 }
 
 .container {
-  max-width: 90vw;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 :root {
-  --header-color: #5a5a8c;
-  --header-color-hover: #46466d;
+  --header-color: #3c3c5d;
+  --header-color-hover: #28283e;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   #root {
     display: flex;
     flex-direction: row;

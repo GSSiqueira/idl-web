@@ -11,8 +11,18 @@ function Header() {
           <li>
             <Link to="/">Home</Link>
           </li>
+
+          <li>
+            <Link to="/caixa">Caixa</Link>
+          </li>
+
+          <li>
+            <Link to="/">Fixos</Link>
+          </li>
+          <li>
+            <Link to="/">Logout</Link>
+          </li>
         </ul>
-        <Link to="/">Login</Link>
       </nav>
     </header>
   );
