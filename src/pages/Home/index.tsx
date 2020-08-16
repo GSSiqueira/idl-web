@@ -7,9 +7,9 @@ function Home() {
   return (
     <>
       <Header />
-      <main className="container">
+      <main className="home-content container">
         <h1 className="main-title">IDL Manager</h1>
-        <section>
+        <section className="description-content">
           <h2 className="secondary-title">Bem vindo ao IDL Manager</h2>
           <p className="content-text">
             O aplicativo é um WIP. Funções serão adicionadas conforme o

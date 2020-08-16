@@ -1,0 +1,21 @@
+.basic-button {
+  margin-top: 1.5rem;
+  align-self: center;
+  max-width: 300px;
+  max-height: 3rem;
+  padding: 0.6rem 4rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--header-color);
+
+  font: 400 1.2rem 'Roboto';
+  color: white;
+}
+
+@media screen and (min-width: 1024px) {
+  .basic-button {
+    margin: 0;
+    align-self: flex-end;
+    padding: 0.6rem 2rem;
+  }
+}

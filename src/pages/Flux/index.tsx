@@ -1,7 +1,9 @@
 import React from 'react';
-
 import './styles.css';
 import Header from '../../components/Header';
+import BasicInput from '../../components/BasicInput';
+import EntriesTable from './EntriesTable';
+import BasicButton from '../../components/BasicButton';
 
 function Flux() {
   return (
@@ -12,96 +14,43 @@ function Flux() {
         <section className="influx-section">
           <h2>Entradas:</h2>
           <form>
-            <h3>Nova entrada:</h3>
-            <label>Valor</label>
-            <input type="number" />
-            <label>Nome</label>
-            <input type="text" placeholder="Digite o nome da entrada." />
+            <BasicInput
+              type="number"
+              name="influx-value"
+              label="Valor:"
+              placeholder="0.0"
+              step="0.10"
+            />
+            <BasicInput
+              type="text"
+              name="influx-entry-name"
+              label="Nome:"
+              placeholder="Digite o nome da entrada."
+            />
+
+            <BasicButton label="Enviar" name="influx-button" type="submit" />
           </form>
-          <table className="influx-table entry-table">
-            <thead>
-              <tr>
-                <th>Horário</th>
-                <th>Nome</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>7:03</td>
-                <td>Caixa Inicial</td>
-                <td>R$1000,00</td>
-              </tr>
-              <tr>
-                <td>7:03</td>
-                <td>Moedas</td>
-                <td>R$10,00</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={2}>Total</td>
-                <td>R$1010,00</td>
-              </tr>
-            </tfoot>
-          </table>
+          <EntriesTable />
         </section>
         <section className="outflux-section">
           <h2>Saidas:</h2>
           <form>
-            <h3>Nova saida:</h3>
-            <label>Valor</label>
-            <input type="number" />
-            <label>Nome</label>
-            <input type="text" placeholder="Digite o nome da saida." />
+            <BasicInput
+              type="number"
+              name="outflux-value"
+              label="Valor:"
+              placeholder="0.0"
+              step="0.10"
+            />
+            <BasicInput
+              type="text"
+              name="outflux-entry-name"
+              label="Nome:"
+              placeholder="Digite o nome da entrada."
+            />
+            <BasicButton label="Enviar" name="outflux-button" type="submit" />
           </form>
-          <table className="outflux-table entry-table">
-            <thead>
-              <tr>
-                <th>Horário</th>
-                <th>Nome</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>7:15</td>
-                <td>Leite</td>
-                <td>R$10,00</td>
-              </tr>
-              <tr>
-                <td>8:03</td>
-                <td>Padaria</td>
-                <td>R$15,00</td>
-              </tr>
-              <tr>
-                <td>12:03</td>
-                <td>Entregas</td>
-                <td>R$35,00</td>
-              </tr>
-              <tr>
-                <td>7:15</td>
-                <td>Leite</td>
-                <td>R$10,00</td>
-              </tr>
-              <tr>
-                <td>8:03</td>
-                <td>Padaria</td>
-                <td>R$15,00</td>
-              </tr>
-              <tr>
-                <td>12:03</td>
-                <td>Entregas</td>
-                <td>R$35,00</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={2}>Total</td>
-                <td>R$60,00</td>
-              </tr>
-            </tfoot>
-          </table>
+          <EntriesTable />
         </section>
       </main>
     </>

@@ -2,6 +2,12 @@
   display: flex;
   flex-flow: column wrap;
 }
+.flux-content form {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+  margin: 0;
+}
 
 .main-title {
   width: 70%;
@@ -12,33 +18,12 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
   padding-bottom: 2rem;
   border-bottom: 2px solid black;
 }
 
 .outflux-section {
   margin-top: 2rem;
-}
-
-.entry-table,
-.flux-content label {
-  font: 400 1.2rem 'Roboto';
-  margin: 0.6rem auto;
-}
-
-.entry-table tr {
-  text-align: center;
-  border-bottom: 1px solid black;
-}
-
-.entry-table th,
-.entry-table td {
-  padding: 0.8rem;
-}
-
-.entry-table tfoot {
-  font-weight: bold;
 }
 
 @media screen and (min-width: 1024px) {
@@ -55,6 +40,7 @@
   .influx-section,
   .outflux-section {
     border: none;
+    align-items: center;
   }
 
   .influx-section {
@@ -64,6 +50,32 @@
   .outflux-section {
     margin: 0;
     grid-area: outflux;
+  }
+
+  .flux-content form {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 2rem;
+    grid-template-areas: 'value name button';
+    justify-items: stretch;
+    align-items: center;
+  }
+
+  .influx-value,
+  .outflux-value {
+    grid-area: value;
+  }
+
+  .influx-entry-name,
+  .outflux-entry-name {
+    grid-area: name;
+  }
+
+  .influx-button,
+  .outflux-button {
+    grid-area: button;
   }
 
   .main-title {
