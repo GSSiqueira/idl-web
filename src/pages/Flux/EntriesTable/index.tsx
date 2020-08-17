@@ -1,7 +1,13 @@
 import React from 'react';
 import './styles.css';
 
-function EntriesTable() {
+import { Entry } from '../../../api/DailyFlux/DailyFluxController';
+
+interface EntriesTableProps {
+  entries: Array<Entry>;
+}
+
+const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
   return (
     <table className="entry-table">
       <thead>
@@ -12,26 +18,17 @@ function EntriesTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>7:03</td>
-          <td>Caixa Inicial</td>
-          <td>R$1000,00</td>
-        </tr>
-        <tr>
-          <td>7:03</td>
-          <td>Moedas</td>
-          <td>R$10,00</td>
-        </tr>
-        <tr>
-          <td>7:03</td>
-          <td>Really long text name just for lolzies</td>
-          <td>R$10,00</td>
-        </tr>
-        <tr>
-          <td>7:03</td>
-          <td>Amazingly even bigger Really long text name just for lolzies</td>
-          <td>R$10,00</td>
-        </tr>
+        {entries.map((entry) => {
+          return (
+            <tr
+              className={entry.value < 0 ? 'negative-value' : 'positive-value'}
+            >
+              <td>{entry.time}</td>
+              <td>{entry.name}</td>
+              <td>{entry.value}</td>
+            </tr>
+          );
+        })}
       </tbody>
       <tfoot>
         <tr>
@@ -41,6 +38,6 @@ function EntriesTable() {
       </tfoot>
     </table>
   );
-}
+};
 
 export default EntriesTable;

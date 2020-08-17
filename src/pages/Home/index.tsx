@@ -10,7 +10,7 @@ function Home() {
       <main className="home-content container">
         <h1 className="main-title">IDL Manager</h1>
         <section className="description-content">
-          <h2 className="secondary-title">Bem vindo ao IDL Manager</h2>
+          <h2 className="secondary-title">Bem-vindo ao IDL Manager</h2>
           <p className="content-text">
             O aplicativo é um WIP. Funções serão adicionadas conforme o
             desenvolvimento.

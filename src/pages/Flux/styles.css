@@ -13,17 +13,12 @@
   width: 70%;
 }
 
-.influx-section,
-.outflux-section {
+.flux-section {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding-bottom: 2rem;
   border-bottom: 2px solid black;
-}
-
-.outflux-section {
-  margin-top: 2rem;
 }
 
 @media screen and (min-width: 1024px) {
@@ -35,21 +30,13 @@
     column-gap: 1rem;
     grid-template-areas:
       'title title'
-      'influx outflux';
+      'flux flux';
   }
-  .influx-section,
-  .outflux-section {
+
+  .flux-section {
     border: none;
     align-items: center;
-  }
-
-  .influx-section {
-    grid-area: influx;
-  }
-
-  .outflux-section {
-    margin: 0;
-    grid-area: outflux;
+    grid-area: flux;
   }
 
   .flux-content form {
@@ -63,18 +50,15 @@
     align-items: center;
   }
 
-  .influx-value,
-  .outflux-value {
+  .entry-value {
     grid-area: value;
   }
 
-  .influx-entry-name,
-  .outflux-entry-name {
+  .entry-name {
     grid-area: name;
   }
 
-  .influx-button,
-  .outflux-button {
+  .submit-button {
     grid-area: button;
   }
 
