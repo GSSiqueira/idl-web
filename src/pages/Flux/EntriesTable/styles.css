@@ -15,7 +15,7 @@
 
 .entry-table thead,
 .entry-table tfoot {
-  font-weight: bold;
+  font: 700 1.4rem 'Roboto';
 }
 
 .negative-value {

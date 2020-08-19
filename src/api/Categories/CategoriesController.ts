@@ -48,6 +48,10 @@ class CategoriesController {
       },
     ];
   }
+
+  getCategories() {
+    return this.categories;
+  }
 }
 
 export default CategoriesController;

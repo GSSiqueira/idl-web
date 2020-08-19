@@ -5,10 +5,14 @@ import BasicInput from '../../components/BasicInput';
 import EntriesTable from './EntriesTable';
 import BasicButton from '../../components/BasicButton';
 import DailyFluxController from '../../api/DailyFlux/DailyFluxController';
+import CategoriesController from '../../api/Categories/CategoriesController';
+import CategoriesSelect from '../../components/CategoriesSelect';
 
 function Flux() {
   const dailyFluxController = new DailyFluxController();
+  const categoriesController = new CategoriesController();
   const entriesList = dailyFluxController.getEntriesList();
+  const categoriesList = categoriesController.getCategories();
 
   return (
     <>
@@ -33,29 +37,12 @@ function Flux() {
               placeholder="Digite o nome da entrada."
               required
             />
-            <div className="radio-input-group">
-              <label htmlFor="influx-radio">
-                Entrada
-                <input
-                  type="radio"
-                  name="entry-type"
-                  id="influx-radio"
-                  value="false"
-                  required
-                />
-              </label>
-
-              <label htmlFor="outflux-radio">
-                Despesa
-                <input
-                  type="radio"
-                  name="entry-type"
-                  id="outflux-radio"
-                  value="true"
-                  required
-                />
-              </label>
-            </div>
+            <CategoriesSelect
+              categories={categoriesList}
+              label="Categoria"
+              name="entry-category"
+              required
+            />
             <BasicButton label="Enviar" name="submit-button" type="submit" />
           </form>
           <EntriesTable entries={entriesList} />
