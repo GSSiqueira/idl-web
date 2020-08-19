@@ -21,6 +21,20 @@
   border-bottom: 2px solid black;
 }
 
+.radio-input-group {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 1rem;
+}
+
+.radio-input-group label {
+  font: 400 1.2rem 'Roboto';
+  margin: 0.6rem auto;
+  display: inline-block;
+}
+
 @media screen and (min-width: 1024px) {
   .flux-content {
     width: 100%;
@@ -42,10 +56,10 @@
   .flux-content form {
     display: grid;
     width: 100%;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
     grid-template-rows: auto;
     column-gap: 2rem;
-    grid-template-areas: 'value name button';
+    grid-template-areas: 'value name type button';
     justify-items: stretch;
     align-items: center;
   }
@@ -60,6 +74,18 @@
 
   .submit-button {
     grid-area: button;
+  }
+
+  .radio-input-group {
+    grid-area: type;
+    margin: 0;
+    align-items: flex-end;
+  }
+
+  .radio-input-group label {
+    font: 400 1.2rem 'Roboto';
+    margin: 0;
+    display: inline-block;
   }
 
   .main-title {

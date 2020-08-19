@@ -21,16 +21,41 @@ function Flux() {
               type="number"
               name="entry-value"
               label="Valor:"
-              placeholder="0.0"
+              placeholder="Digite o valor da entrada."
               step="0.10"
+              min={0}
+              required
             />
             <BasicInput
               type="text"
               name="entry-name"
               label="Nome:"
               placeholder="Digite o nome da entrada."
+              required
             />
+            <div className="radio-input-group">
+              <label htmlFor="influx-radio">
+                Entrada
+                <input
+                  type="radio"
+                  name="entry-type"
+                  id="influx-radio"
+                  value="false"
+                  required
+                />
+              </label>
 
+              <label htmlFor="outflux-radio">
+                Despesa
+                <input
+                  type="radio"
+                  name="entry-type"
+                  id="outflux-radio"
+                  value="true"
+                  required
+                />
+              </label>
+            </div>
             <BasicButton label="Enviar" name="submit-button" type="submit" />
           </form>
           <EntriesTable entries={entriesList} />
