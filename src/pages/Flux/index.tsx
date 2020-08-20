@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+
 import './styles.css';
 import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import EntriesTable from './EntriesTable';
 import BasicButton from '../../components/BasicButton';
-import DailyFluxController from '../../api/DailyFlux/DailyFluxController';
+import DailyFluxController, {
+  Entry,
+} from '../../api/DailyFlux/DailyFluxController';
 import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 
@@ -12,21 +15,34 @@ function Flux() {
   const dailyFluxController = new DailyFluxController();
   const categoriesController = new CategoriesController();
 
-  const [newValue, setNewValue] = useState(0);
+  const [newValue, setNewValue] = useState('0');
   const [newCategory, setNewCategory] = useState('');
-  const [categoryList, setCategoryList] = useState(
-    categoriesController.getCategories()
-  );
+  const [categoryList] = useState(categoriesController.getCategories());
   const [entryList, setEntryList] = useState(
     dailyFluxController.getEntriesList()
   );
 
-  const handleNewValue = (event: any) => {
+  const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewValue(event.target.value);
   };
 
-  const handleNewCategory = (event: any) => {
+  const handleNewCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNewCategory(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const category = categoryList.filter((c) => {
+      return c.id === parseInt(newCategory);
+    })[0];
+    const newEntry: Entry = {
+      time: new Date().toString(),
+      value: parseFloat(newValue),
+      category,
+    };
+    setEntryList([...entryList, newEntry]);
+    setNewValue('0');
+    setNewCategory('');
   };
 
   return (
@@ -35,7 +51,7 @@ function Flux() {
       <main className="flux-content container">
         <h1 className="main-title">Controle de Caixa</h1>
         <section className="flux-section">
-          <form>
+          <form onSubmit={handleSubmit}>
             <BasicInput
               type="number"
               name="entry-value"

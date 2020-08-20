@@ -5,7 +5,7 @@ interface BasicInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
   type: string;
-  handleNewValue: (event: any) => void;
+  handleNewValue: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const BasicInput: React.FC<BasicInputProps> = ({

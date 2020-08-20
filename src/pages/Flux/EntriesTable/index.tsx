@@ -44,6 +44,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
                   ? 'negative-value'
                   : 'positive-value'
               }
+              key={entry.time}
             >
               <td>{entry.time}</td>
               <td>{entry.category.name}</td>
