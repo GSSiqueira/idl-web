@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
@@ -11,8 +11,23 @@ import CategoriesSelect from '../../components/CategoriesSelect';
 function Flux() {
   const dailyFluxController = new DailyFluxController();
   const categoriesController = new CategoriesController();
-  const entriesList = dailyFluxController.getEntriesList();
-  const categoriesList = categoriesController.getCategories();
+
+  const [newValue, setNewValue] = useState(0);
+  const [newCategory, setNewCategory] = useState('');
+  const [categoryList, setCategoryList] = useState(
+    categoriesController.getCategories()
+  );
+  const [entryList, setEntryList] = useState(
+    dailyFluxController.getEntriesList()
+  );
+
+  const handleNewValue = (event: any) => {
+    setNewValue(event.target.value);
+  };
+
+  const handleNewCategory = (event: any) => {
+    setNewCategory(event.target.value);
+  };
 
   return (
     <>
@@ -28,24 +43,21 @@ function Flux() {
               placeholder="Digite o valor da entrada."
               step="0.10"
               min={0}
-              required
-            />
-            <BasicInput
-              type="text"
-              name="entry-name"
-              label="Nome:"
-              placeholder="Digite o nome da entrada."
+              value={newValue}
+              handleNewValue={handleNewValue}
               required
             />
             <CategoriesSelect
-              categories={categoriesList}
+              categories={categoryList}
               label="Categoria"
               name="entry-category"
+              value={newCategory}
+              handleNewCategory={handleNewCategory}
               required
             />
             <BasicButton label="Enviar" name="submit-button" type="submit" />
           </form>
-          <EntriesTable entries={entriesList} />
+          <EntriesTable entries={entryList} />
         </section>
       </main>
     </>

@@ -6,12 +6,14 @@ interface BasicInputProps extends InputHTMLAttributes<HTMLSelectElement> {
   label: string;
   name: string;
   categories: Array<Category>;
+  handleNewCategory: (event: any) => void;
 }
 
 const CategoriesSelect: React.FC<BasicInputProps> = ({
   label,
   name,
   categories,
+  handleNewCategory,
   ...rest
 }) => {
   return (
@@ -24,6 +26,7 @@ const CategoriesSelect: React.FC<BasicInputProps> = ({
         type="select"
         name={name}
         id={name}
+        onChange={handleNewCategory}
         {...rest}
       >
         <option value="" selected disabled>
