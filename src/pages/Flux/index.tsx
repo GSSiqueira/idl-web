@@ -15,7 +15,7 @@ function Flux() {
   const dailyFluxController = new DailyFluxController();
   const categoriesController = new CategoriesController();
 
-  const [newValue, setNewValue] = useState('0');
+  const [newValue, setNewValue] = useState(0.0);
   const [newCategory, setNewCategory] = useState('');
   const [categoryList] = useState(categoriesController.getCategories());
   const [entryList, setEntryList] = useState(
@@ -23,7 +23,7 @@ function Flux() {
   );
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewValue(event.target.value);
+    setNewValue(parseFloat(event.target.value));
   };
 
   const handleNewCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,12 +36,12 @@ function Flux() {
       return c.id === parseInt(newCategory);
     })[0];
     const newEntry: Entry = {
-      time: new Date().toString(),
-      value: parseFloat(newValue),
+      time: new Date(),
+      value: newValue,
       category,
     };
     setEntryList([...entryList, newEntry]);
-    setNewValue('0');
+    setNewValue(0);
     setNewCategory('');
   };
 
@@ -58,7 +58,7 @@ function Flux() {
               label="Valor:"
               placeholder="Digite o valor da entrada."
               step="0.10"
-              min={0}
+              min={0.1}
               value={newValue}
               handleNewValue={handleNewValue}
               required

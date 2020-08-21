@@ -1,8 +1,12 @@
 import React from 'react';
 import './styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Entry } from '../../../api/DailyFlux/DailyFluxController';
 import { CategoryType } from '../../../api/Categories/CategoriesController';
+import { getTimeFormated } from '../../../services/DateServices';
 
 interface EntriesTableProps {
   entries: Array<Entry>;
@@ -33,6 +37,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
           <th>Horário</th>
           <th>Nome</th>
           <th>Valor (R$)</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -44,11 +49,20 @@ const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
                   ? 'negative-value'
                   : 'positive-value'
               }
-              key={entry.time}
+              key={entry.id}
             >
-              <td>{entry.time}</td>
+              <td>{getTimeFormated(entry.time)}</td>
               <td>{entry.category.name}</td>
               <td>{entry.value.toFixed(2)}</td>
+              <td>
+                <button
+                  onClick={() => {
+                    console.log('Delete ' + entry.id);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                </button>
+              </td>
             </tr>
           );
         })}
@@ -56,11 +70,11 @@ const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
       <tfoot>
         <tr className="negative-value">
           <td colSpan={2}>Total Despesas:</td>
-          <td>{expensesTotal.toFixed(2)}</td>
+          <td colSpan={2}>{`R$${expensesTotal.toFixed(2)}`}</td>
         </tr>
         <tr className="positive-value">
           <td colSpan={2}>Total Vendas:</td>
-          <td>{dailyTotal.toFixed(2)}</td>
+          <td colSpan={2}>{`R$${dailyTotal.toFixed(2)}`}</td>
         </tr>
       </tfoot>
     </table>

@@ -1,7 +1,8 @@
 import { Category, CategoryType } from '../Categories/CategoriesController';
 
 export interface Entry {
-  time: string;
+  id?: number;
+  time: Date;
   value: number;
   category: Category;
 }
@@ -12,7 +13,8 @@ class DailyFluxController {
   constructor() {
     this.entries = [
       {
-        time: '7:05',
+        id: 1,
+        time: new Date(),
         value: 1000.0,
         category: {
           id: 1,
@@ -21,7 +23,8 @@ class DailyFluxController {
         },
       },
       {
-        time: '8:05',
+        id: 2,
+        time: new Date(),
         value: 10.0,
         category: {
           id: 4,
@@ -30,7 +33,8 @@ class DailyFluxController {
         },
       },
       {
-        time: '12:05',
+        id: 3,
+        time: new Date(),
         value: 3000.0,
         category: {
           id: 2,
