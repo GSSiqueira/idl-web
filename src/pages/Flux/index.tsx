@@ -11,10 +11,15 @@ import DailyFluxController, {
 import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 
-function Flux() {
-  const dailyFluxController = new DailyFluxController();
-  const categoriesController = new CategoriesController();
+interface FluxPageProps {
+  dailyFluxController: DailyFluxController;
+  categoriesController: CategoriesController;
+}
 
+const Flux: React.FC<FluxPageProps> = ({
+  dailyFluxController,
+  categoriesController,
+}) => {
   const [newValue, setNewValue] = useState(0.0);
   const [newCategory, setNewCategory] = useState('');
   const [categoryList] = useState(categoriesController.getCategories());
@@ -78,6 +83,6 @@ function Flux() {
       </main>
     </>
   );
-}
+};
 
 export default Flux;
