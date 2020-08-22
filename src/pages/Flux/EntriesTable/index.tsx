@@ -10,9 +10,13 @@ import { getTimeFormated } from '../../../services/DateServices';
 
 interface EntriesTableProps {
   entries: Array<Entry>;
+  handleDeleteEntry: (time: number) => void;
 }
 
-const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
+const EntriesTable: React.FC<EntriesTableProps> = ({
+  entries,
+  handleDeleteEntry,
+}) => {
   const dailyTotal = Math.abs(
     entries.reduce((total, entry) => {
       return (
@@ -49,19 +53,27 @@ const EntriesTable: React.FC<EntriesTableProps> = ({ entries }) => {
                   ? 'negative-value'
                   : 'positive-value'
               }
-              key={entry.id}
+              key={entry.time.getTime()}
             >
               <td>{getTimeFormated(entry.time)}</td>
               <td>{entry.category.name}</td>
               <td>{entry.value.toFixed(2)}</td>
               <td>
-                <button
+                <FontAwesomeIcon
+                  className="delete-button"
                   onClick={() => {
-                    console.log('Delete ' + entry.id);
+                    if (
+                      window.confirm(
+                        'Tem certeza que deseja deletar esta entrada?'
+                      )
+                    ) {
+                      handleDeleteEntry(entry.time.getTime());
+                    }
                   }}
-                >
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
+                  icon={faTrashAlt}
+                  size="lg"
+                  color="red"
+                />
               </td>
             </tr>
           );

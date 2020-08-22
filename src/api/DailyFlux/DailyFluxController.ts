@@ -14,7 +14,7 @@ class DailyFluxController {
     this.entries = [
       {
         id: 1,
-        time: new Date(),
+        time: new Date(1598131624143),
         value: 1000.0,
         category: {
           id: 1,
@@ -24,7 +24,7 @@ class DailyFluxController {
       },
       {
         id: 2,
-        time: new Date(),
+        time: new Date(1598121324149),
         value: 10.0,
         category: {
           id: 4,
@@ -34,7 +34,7 @@ class DailyFluxController {
       },
       {
         id: 3,
-        time: new Date(),
+        time: new Date(1598134324443),
         value: 3000.0,
         category: {
           id: 2,

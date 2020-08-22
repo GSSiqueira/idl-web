@@ -27,8 +27,16 @@
   background-color: #c1c1d7;
 }
 
+.delete-button {
+  padding: 0.5rem;
+}
+
 @media screen and (min-width: 1024px) {
   .entry-table {
     min-width: 700px;
+  }
+
+  .delete-button {
+    cursor: pointer;
   }
 }

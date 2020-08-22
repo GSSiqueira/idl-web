@@ -50,6 +50,13 @@ const Flux: React.FC<FluxPageProps> = ({
     setNewCategory('');
   };
 
+  const handleDeleteEntry = (time: number) => {
+    let newEntryList = entryList.filter((entry) => {
+      return entry.time.getTime() !== time;
+    });
+    setEntryList(newEntryList);
+  };
+
   return (
     <>
       <Header />
@@ -78,7 +85,10 @@ const Flux: React.FC<FluxPageProps> = ({
             />
             <BasicButton label="Enviar" name="submit-button" type="submit" />
           </form>
-          <EntriesTable entries={entryList} />
+          <EntriesTable
+            handleDeleteEntry={handleDeleteEntry}
+            entries={entryList}
+          />
         </section>
       </main>
     </>
