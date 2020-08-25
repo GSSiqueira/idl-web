@@ -1,7 +1,6 @@
 import React from 'react';
 import './styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Entry } from '../../../api/DailyFlux/DailyFluxController';
@@ -40,7 +39,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
         <tr>
           <th>Horário</th>
           <th>Nome</th>
-          <th>Valor (R$)</th>
+          <th>Valor</th>
           <th></th>
         </tr>
       </thead>
@@ -57,7 +56,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
             >
               <td>{getTimeFormated(entry.time)}</td>
               <td>{entry.category.name}</td>
-              <td>{entry.value.toFixed(2)}</td>
+              <td>{`R$ ${entry.value.toFixed(2)}`}</td>
               <td>
                 <FontAwesomeIcon
                   className="delete-button"
@@ -82,11 +81,11 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
       <tfoot>
         <tr className="negative-value">
           <td colSpan={2}>Total Despesas:</td>
-          <td colSpan={2}>{`R$${expensesTotal.toFixed(2)}`}</td>
+          <td colSpan={2}>{`R$ ${expensesTotal.toFixed(2)}`}</td>
         </tr>
         <tr className="positive-value">
           <td colSpan={2}>Total Vendas:</td>
-          <td colSpan={2}>{`R$${dailyTotal.toFixed(2)}`}</td>
+          <td colSpan={2}>{`R$ ${dailyTotal.toFixed(2)}`}</td>
         </tr>
       </tfoot>
     </table>

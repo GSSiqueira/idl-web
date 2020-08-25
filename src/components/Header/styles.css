@@ -1,36 +1,79 @@
 nav {
   display: flex;
-  flex-flow: row;
+  width: 100vw;
+  flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
   background-color: var(--header-color);
-  overflow: hidden;
 }
 
 nav ul {
   display: flex;
-  flex-direction: row;
+  flex-flow: column wrap;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 0;
 }
+
 nav li {
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
+  width: 100%;
+  display: inline-block;
 }
 
-nav a {
-  font: 700 1.3rem 'Roboto';
+nav ul li a {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  font: 700 1.1rem 'Roboto';
   color: white;
   text-decoration: none;
   padding: 0.8rem 1.2rem;
-  transition: background-color 300ms;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav-bar-hide li:not(:first-child) {
+  display: none;
+}
+
+#home-row {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.responsive-nav-button {
+  display: inline-block;
+  background-color: var(--header-color);
+  border: none;
+  padding: 0.8rem 1.2rem;
+}
+
+@media (min-width: 700px) {
+  nav ul {
+    flex-flow: row nowrap;
+  }
+
+  .nav-bar-hide li:not(:first-child) {
+    display: inline-block;
+  }
+
+  .responsive-nav-button {
+    display: none;
+  }
+
+  nav ul li a {
+    justify-content: center;
+  }
 }
 
 @media (min-width: 1024px) {
   nav {
     max-height: 90%;
-    max-width: 20vw;
+    max-width: 10vw;
     flex-flow: column nowrap;
     margin-top: 3rem;
     margin-left: 2rem;
@@ -50,6 +93,7 @@ nav a {
     display: block;
     padding: 1.3rem 2rem;
     font: 400 1rem 'Roboto';
+    transition: background-color 300ms;
     width: 100%;
   }
   nav a:hover {

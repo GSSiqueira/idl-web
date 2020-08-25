@@ -68,7 +68,6 @@ const Flux: React.FC<FluxPageProps> = ({
               type="number"
               name="entry-value"
               label="Valor:"
-              placeholder="Digite o valor da entrada."
               step="0.10"
               min={0.1}
               value={newValue}
