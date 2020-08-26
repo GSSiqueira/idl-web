@@ -10,6 +10,7 @@ import DailyFluxController, {
 } from '../../api/DailyFlux/DailyFluxController';
 import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
+import { getISODate } from '../../services/DateServices';
 
 interface FluxPageProps {
   dailyFluxController: DailyFluxController;
@@ -22,6 +23,7 @@ const Flux: React.FC<FluxPageProps> = ({
 }) => {
   const [newValue, setNewValue] = useState(0.0);
   const [newCategory, setNewCategory] = useState('');
+  const [entriesDate, setEntriesDate] = useState(new Date());
   const [categoryList] = useState(categoriesController.getCategories());
   const [entryList, setEntryList] = useState(
     dailyFluxController.getEntriesList()
@@ -29,6 +31,12 @@ const Flux: React.FC<FluxPageProps> = ({
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewValue(parseFloat(event.target.value));
+  };
+
+  const handleNewDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+    const newDate = new Date(event.target.value);
+    setEntriesDate(newDate);
   };
 
   const handleNewCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -40,14 +48,19 @@ const Flux: React.FC<FluxPageProps> = ({
     const category = categoryList.filter((c) => {
       return c.id === parseInt(newCategory);
     })[0];
-    const newEntry: Entry = {
-      time: new Date(),
-      value: newValue,
-      category,
-    };
-    setEntryList([...entryList, newEntry]);
-    setNewValue(0);
-    setNewCategory('');
+
+    if (category && newValue) {
+      const newEntry: Entry = {
+        time: new Date(),
+        value: newValue,
+        category,
+      };
+      setEntryList([...entryList, newEntry]);
+      setNewValue(0);
+      setNewCategory('');
+    } else {
+      console.log('ERROR: INCORRECT DATA INPUT.');
+    }
   };
 
   const handleDeleteEntry = (time: number) => {
@@ -65,15 +78,24 @@ const Flux: React.FC<FluxPageProps> = ({
         <section className="flux-section">
           <form onSubmit={handleSubmit}>
             <BasicInput
+              type="date"
+              name="entries-date"
+              label="Data:"
+              value={getISODate(entriesDate)}
+              handleNewValue={handleNewDate}
+            />
+
+            <BasicInput
               type="number"
               name="entry-value"
               label="Valor:"
-              step="0.10"
+              step="0.05"
               min={0.1}
               value={newValue}
               handleNewValue={handleNewValue}
               required
             />
+
             <CategoriesSelect
               categories={categoryList}
               label="Categoria"
@@ -82,6 +104,7 @@ const Flux: React.FC<FluxPageProps> = ({
               handleNewCategory={handleNewCategory}
               required
             />
+
             <BasicButton label="Enviar" name="submit-button" type="submit" />
           </form>
           <EntriesTable
