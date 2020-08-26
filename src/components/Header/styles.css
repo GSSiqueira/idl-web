@@ -34,6 +34,10 @@ nav ul li a {
   align-items: center;
 }
 
+nav ul li a svg {
+  margin: 0 0.5rem;
+}
+
 .nav-bar-hide li:not(:first-child) {
   display: none;
 }
@@ -89,12 +93,13 @@ nav ul li a {
   nav li {
     margin: 0;
   }
-  nav a {
-    display: block;
+  nav ul li a {
+    display: inline-flex;
     padding: 1.3rem 2rem;
     font: 400 1rem 'Roboto';
     transition: background-color 300ms;
     width: 100%;
+    justify-content: flex-start;
   }
   nav a:hover {
     background-color: var(--header-color-hover);

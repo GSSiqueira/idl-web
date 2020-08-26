@@ -1,7 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faBars } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faBars,
+  faList,
+  faPowerOff,
+  faExchangeAlt,
+  faFileInvoiceDollar,
+} from '@fortawesome/free-solid-svg-icons';
 
 import './styles.css';
 
@@ -29,18 +36,30 @@ function Header() {
             </button>
           </li>
           <li>
-            <Link to="/caixa">Caixa</Link>
+            <Link to="/caixa">
+              <FontAwesomeIcon icon={faExchangeAlt} />
+              Caixa
+            </Link>
           </li>
 
           <li>
-            <Link to="/">Fixos</Link>
+            <Link to="/">
+              <FontAwesomeIcon icon={faFileInvoiceDollar} />
+              Fixos
+            </Link>
           </li>
 
           <li>
-            <Link to="/">Categorias</Link>
+            <Link to="/">
+              <FontAwesomeIcon icon={faList} />
+              Categorias
+            </Link>
           </li>
           <li>
-            <Link to="/">Logout</Link>
+            <Link to="/">
+              <FontAwesomeIcon icon={faPowerOff} />
+              Logout
+            </Link>
           </li>
         </ul>
       </nav>
