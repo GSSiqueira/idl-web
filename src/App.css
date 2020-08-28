@@ -136,21 +136,21 @@ body {
 }
 
 h1 {
-  font: 700 1.8rem 'Roboto Mono';
+  font: 700 1.8rem 'Roboto';
   margin: 1rem auto;
   text-align: center;
   text-transform: uppercase;
 }
 
 h2 {
-  font: 700 1.4rem 'Roboto Mono';
+  font: 700 1.4rem 'Roboto';
   margin: 0.6rem auto;
 
   text-align: center;
 }
 
 h3 {
-  font: 700 1.2rem 'Roboto Mono';
+  font: 700 1.2rem 'Roboto';
   margin: 0.6rem auto;
 
   text-align: center;

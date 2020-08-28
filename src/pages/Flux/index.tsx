@@ -12,7 +12,7 @@ import CategoriesController, {
   Category,
 } from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
-import { getISODate } from '../../services/DateServices';
+import { getISODate, checkSameDate } from '../../services/DateServices';
 
 interface FluxPageProps {
   dailyFluxController: DailyFluxController;
@@ -58,17 +58,25 @@ const Flux: React.FC<FluxPageProps> = ({
       return c.id === parseInt(newCategory);
     })[0];
 
-    if (category && newValue) {
-      const newEntry: Entry = {
-        time: new Date(),
-        value: newValue,
-        category,
-      };
-      setEntryList([...entryList, newEntry]);
-      setNewValue(0);
-      setNewCategory('');
-    } else {
-      console.log('ERROR: INCORRECT DATA INPUT.');
+    const entryDate = checkSameDate(entriesDate) ? new Date() : entriesDate;
+
+    if (
+      checkSameDate(entriesDate) ||
+      window.confirm('Deseja mesmo adicionar uma entrada para uma outra data ?')
+    ) {
+      if (category && newValue) {
+        const newEntry: Entry = {
+          time: entryDate,
+          value: newValue,
+          category,
+        };
+        dailyFluxController.addEntry(newEntry);
+        setEntryList([...entryList, newEntry]);
+        setNewValue(0);
+        setNewCategory('');
+      } else {
+        console.log('ERROR: INCORRECT DATA INPUT.');
+      }
     }
   };
 

@@ -1,12 +1,14 @@
 .flux-content {
   display: flex;
   flex-flow: column wrap;
+  align-content: center;
 }
 .flux-content form {
   display: flex;
   flex-flow: column wrap;
   width: 100%;
   margin: 0;
+  max-width: 700px;
 }
 
 .main-title {
@@ -42,16 +44,21 @@
   .flux-content form {
     display: grid;
     width: 100%;
+    max-width: 1200px;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: auto;
     column-gap: 2rem;
-    grid-template-areas: 'value category button';
+    grid-template-areas: '. date .' 'value category button';
     justify-items: stretch;
     align-items: center;
   }
 
   .entry-value {
     grid-area: value;
+  }
+
+  .entries-date {
+    grid-area: date;
   }
 
   .entry-category {
