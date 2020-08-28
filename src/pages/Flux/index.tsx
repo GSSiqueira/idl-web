@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './styles.css';
 import Header from '../../components/Header';
@@ -8,7 +8,9 @@ import BasicButton from '../../components/BasicButton';
 import DailyFluxController, {
   Entry,
 } from '../../api/DailyFlux/DailyFluxController';
-import CategoriesController from '../../api/Categories/CategoriesController';
+import CategoriesController, {
+  Category,
+} from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import { getISODate } from '../../services/DateServices';
 
@@ -24,19 +26,26 @@ const Flux: React.FC<FluxPageProps> = ({
   const [newValue, setNewValue] = useState(0.0);
   const [newCategory, setNewCategory] = useState('');
   const [entriesDate, setEntriesDate] = useState(new Date());
-  const [categoryList] = useState(categoriesController.getCategories());
-  const [entryList, setEntryList] = useState(
-    dailyFluxController.getEntriesList()
-  );
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const [entryList, setEntryList] = useState<Entry[]>([]);
+
+  useEffect(() => {
+    setCategoryList(categoriesController.getCategories());
+    setEntryList(dailyFluxController.getEntriesList(entriesDate));
+  }, []);
+
+  useEffect(() => {
+    setEntryList(dailyFluxController.getEntriesList(entriesDate));
+  }, [entriesDate]);
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewValue(parseFloat(event.target.value));
   };
 
   const handleNewDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
-    const newDate = new Date(event.target.value);
+    const newDate = new Date(event.target.value + 'T00:00:00');
     setEntriesDate(newDate);
+    //Timing problem here on setState
   };
 
   const handleNewCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {

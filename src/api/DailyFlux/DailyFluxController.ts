@@ -1,4 +1,5 @@
 import { Category, CategoryType } from '../Categories/CategoriesController';
+import { getISODate } from '../../services/DateServices';
 
 export interface Entry {
   id?: number;
@@ -45,8 +46,11 @@ class DailyFluxController {
     ];
   }
 
-  getEntriesList(): Array<Entry> {
-    return this.entries;
+  getEntriesList(date: Date): Array<Entry> {
+    const dateEntries = this.entries.filter((entry) => {
+      return getISODate(entry.time) === getISODate(date);
+    });
+    return dateEntries;
   }
 
   addEntry(newEntry: Entry) {
