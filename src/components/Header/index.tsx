@@ -50,7 +50,7 @@ function Header() {
           </li>
 
           <li>
-            <Link to="/">
+            <Link to="/categorias">
               <FontAwesomeIcon icon={faList} />
               Categorias
             </Link>

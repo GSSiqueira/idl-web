@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Flux from './pages/Flux';
 
 import DailyFluxController from './api/DailyFlux/DailyFluxController';
 import CategoriesController from './api/Categories/CategoriesController';
+import Categories from './pages/Categories';
+import Home from './pages/Home';
+import Flux from './pages/Flux';
 
 function App() {
   const dailyFluxController = new DailyFluxController();
@@ -19,6 +20,9 @@ function App() {
           dailyFluxController={dailyFluxController}
           categoriesController={categoriesController}
         />
+      </Route>
+      <Route path="/categorias">
+        <Categories categoriesController={categoriesController} />
       </Route>
     </Switch>
   );

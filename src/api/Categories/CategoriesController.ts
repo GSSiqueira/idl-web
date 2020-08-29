@@ -13,6 +13,7 @@ export enum CategoryType {
 
 class CategoriesController {
   categories: Array<Category> = [];
+  maxId: number = 6;
 
   constructor() {
     this.categories = [
