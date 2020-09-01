@@ -16,16 +16,12 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
   entries,
   handleDeleteEntry,
 }) => {
-  const dailyTotal = Math.abs(
-    entries.reduce((total, entry) => {
-      return (
-        total +
-        entry.value *
-          (entry.category.type === CategoryType.EntradaCaixa ? -1 : 1)
-      );
-    }, 0)
-  );
-
+  const dailyTotal = entries.reduce((total, entry) => {
+    return (
+      total +
+      entry.value * (entry.category.type === CategoryType.EntradaCaixa ? -1 : 1)
+    );
+  }, 0);
   const expensesTotal = entries.reduce((total, entry) => {
     return (
       total +
@@ -71,7 +67,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
                   }}
                   icon={faTrashAlt}
                   size="lg"
-                  color="red"
+                  color="#3c3c5d"
                 />
               </td>
             </tr>

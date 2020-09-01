@@ -1,11 +1,14 @@
 import React, { InputHTMLAttributes } from 'react';
 import './styles.css';
-import { Category } from '../../api/Categories/CategoriesController';
+import {
+  Category,
+  SelectCategory,
+} from '../../api/Categories/CategoriesController';
 
 interface BasicInputProps extends InputHTMLAttributes<HTMLSelectElement> {
   label: string;
   name: string;
-  categories: Array<Category>;
+  categories: Array<SelectCategory>;
   handleNewCategory: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 

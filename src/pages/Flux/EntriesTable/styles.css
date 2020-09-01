@@ -39,4 +39,8 @@
   .delete-button {
     cursor: pointer;
   }
+
+  .delete-button:hover {
+    color: var(--header-color-hover);
+  }
 }

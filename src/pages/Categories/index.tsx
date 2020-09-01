@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import CategoriesController, {
   Category,
+  CategoryTypes,
 } from '../../api/Categories/CategoriesController';
 import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import BasicButton from '../../components/BasicButton';
 import CategoriesTable from './CategoriesTable';
+import CategoriesSelect from '../../components/CategoriesSelect';
 
 interface CategoriesProps {
   categoriesController: CategoriesController;
@@ -13,15 +15,20 @@ interface CategoriesProps {
 
 const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
   const [categoryName, setCategoryName] = useState('');
+  const [categoryType, setCategoryType] = useState('');
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
+
+  useEffect(() => {
+    setCategoriesList(categoriesController.getCategories());
+  }, []);
 
   const handleNewName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCategoryName(event.target.value);
   };
 
-  useEffect(() => {
-    setCategoriesList(categoriesController.getCategories());
-  }, []);
+  const handleNewType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryType(event.target.value);
+  };
 
   return (
     <>
@@ -38,6 +45,13 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
               value={categoryName}
               handleNewValue={handleNewName}
               required
+            />
+            <CategoriesSelect
+              label="Tipo de Categoria:"
+              name="category-type"
+              categories={CategoryTypes}
+              handleNewCategory={handleNewType}
+              value={categoryType}
             />
             <BasicButton label="Enviar" name="submit-button" type="submit" />
             <CategoriesTable categories={categoriesList} />

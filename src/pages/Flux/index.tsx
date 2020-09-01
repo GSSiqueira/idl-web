@@ -25,7 +25,7 @@ const Flux: React.FC<FluxPageProps> = ({
 }) => {
   const [newValue, setNewValue] = useState(0.0);
   const [newCategory, setNewCategory] = useState('');
-  const [entriesDate, setEntriesDate] = useState(new Date());
+  const [entriesDate, setEntriesDate] = useState<Date>(new Date());
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [entryList, setEntryList] = useState<Entry[]>([]);
 
@@ -37,6 +37,11 @@ const Flux: React.FC<FluxPageProps> = ({
   useEffect(() => {
     setEntryList(dailyFluxController.getEntriesList(entriesDate));
   }, [entriesDate]);
+
+  const clearFields = () => {
+    setNewValue(0);
+    setNewCategory('');
+  };
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewValue(parseFloat(event.target.value));
@@ -72,8 +77,7 @@ const Flux: React.FC<FluxPageProps> = ({
         };
         dailyFluxController.addEntry(newEntry);
         setEntryList([...entryList, newEntry]);
-        setNewValue(0);
-        setNewCategory('');
+        clearFields();
       } else {
         console.log('ERROR: INCORRECT DATA INPUT.');
       }

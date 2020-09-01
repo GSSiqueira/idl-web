@@ -4,12 +4,36 @@ export interface Category {
   type: CategoryType;
 }
 
+export interface SelectCategory {
+  id: number;
+  name: string;
+}
+
 export enum CategoryType {
   EntradaCaixa = 0,
   FechamentoCaixa = 1,
   DespesaDiaria = 2,
   DespesaFixa = 3,
 }
+
+export const CategoryTypes: SelectCategory[] = [
+  {
+    id: CategoryType.EntradaCaixa,
+    name: 'Entrada no Caixa',
+  },
+  {
+    id: CategoryType.FechamentoCaixa,
+    name: 'Fechamento de Caixa',
+  },
+  {
+    id: CategoryType.DespesaDiaria,
+    name: 'Despesa Diaria',
+  },
+  {
+    id: CategoryType.DespesaFixa,
+    name: 'Despesa Fixa',
+  },
+];
 
 class CategoriesController {
   categories: Array<Category> = [];

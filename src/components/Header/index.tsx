@@ -43,16 +43,16 @@ function Header() {
           </li>
 
           <li>
-            <Link to="/">
-              <FontAwesomeIcon icon={faFileInvoiceDollar} />
-              Fixos
+            <Link to="/categorias">
+              <FontAwesomeIcon icon={faList} />
+              Categorias
             </Link>
           </li>
 
           <li>
-            <Link to="/categorias">
-              <FontAwesomeIcon icon={faList} />
-              Categorias
+            <Link to="/">
+              <FontAwesomeIcon icon={faFileInvoiceDollar} />
+              Fixos
             </Link>
           </li>
           <li>
