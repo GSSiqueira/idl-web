@@ -8,7 +8,7 @@ interface CategoriesTableProps {
 
 const CategoriesTable: React.FC<CategoriesTableProps> = ({ categories }) => {
   return (
-    <table className="categories-table">
+    <table className="basic-table">
       <thead>
         <tr>
           <th>Nome</th>

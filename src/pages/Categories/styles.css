@@ -1,0 +1,23 @@
+.categories-content {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+}
+.categories-content form {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+  margin: 0;
+}
+
+.categories-content .main-title {
+  width: 70%;
+}
+
+.categories-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid black;
+}

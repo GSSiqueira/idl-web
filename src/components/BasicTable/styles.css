@@ -1,0 +1,38 @@
+.basic-table {
+  font: 400 1.2rem 'Roboto';
+  margin: 0.6rem auto;
+}
+
+.basic-table tr {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.basic-table th,
+.basic-table td {
+  padding: 0.8rem;
+  vertical-align: middle;
+}
+
+.basic-table thead,
+.basic-table tfoot {
+  font: 700 1.4rem 'Roboto';
+}
+
+.delete-button {
+  padding: 0.5rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .basic-table {
+    min-width: 700px;
+  }
+
+  .delete-button {
+    cursor: pointer;
+  }
+
+  .delete-button:hover {
+    color: var(--header-color-hover);
+  }
+}

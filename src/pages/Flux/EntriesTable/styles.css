@@ -1,46 +1,7 @@
-.entry-table {
-  font: 400 1.2rem 'Roboto';
-  margin: 0.6rem auto;
-}
-
-.entry-table tr {
-  text-align: center;
-  border-bottom: 1px solid black;
-}
-
-.entry-table th,
-.entry-table td {
-  padding: 0.8rem;
-  vertical-align: middle;
-}
-
-.entry-table thead,
-.entry-table tfoot {
-  font: 700 1.4rem 'Roboto';
-}
-
 .negative-value {
   background-color: #d9d9d9;
 }
 
 .positive-value {
   background-color: #c1c1d7;
-}
-
-.delete-button {
-  padding: 0.5rem;
-}
-
-@media screen and (min-width: 1024px) {
-  .entry-table {
-    min-width: 700px;
-  }
-
-  .delete-button {
-    cursor: pointer;
-  }
-
-  .delete-button:hover {
-    color: var(--header-color-hover);
-  }
 }

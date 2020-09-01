@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import './styles.css';
+
 import CategoriesController, {
   Category,
   CategoryTypes,
@@ -54,8 +56,8 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
               value={categoryType}
             />
             <BasicButton label="Enviar" name="submit-button" type="submit" />
-            <CategoriesTable categories={categoriesList} />
           </form>
+          <CategoriesTable categories={categoriesList} />
         </section>
       </main>
     </>

@@ -1,9 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import './styles.css';
-import {
-  Category,
-  SelectCategory,
-} from '../../api/Categories/CategoriesController';
+import { SelectCategory } from '../../api/Categories/CategoriesController';
 
 interface BasicInputProps extends InputHTMLAttributes<HTMLSelectElement> {
   label: string;
