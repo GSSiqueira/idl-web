@@ -172,4 +172,8 @@ p {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  .container {
+    padding-left: 2%;
+  }
 }
