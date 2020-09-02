@@ -1,5 +1,7 @@
 import React from 'react';
 import { Category } from '../../../api/Categories/CategoriesController';
+import './styles.css';
+import '../../../components/BasicTable/styles.css';
 
 interface CategoriesTableProps {
   categories: Array<Category>;
