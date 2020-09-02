@@ -19,5 +19,37 @@
   flex-direction: column;
   justify-content: flex-start;
   padding-bottom: 2rem;
-  border-bottom: 2px solid black;
+}
+
+@media screen and (min-width: 1024px) {
+  .categories-content {
+    width: 100%;
+  }
+
+  .categories-section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 1rem;
+    grid-template-areas: 'form table table';
+  }
+
+  .categories-section form {
+    grid-area: form;
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: stretch;
+  }
+
+  .categories-section table {
+    grid-area: table;
+    width: 100%;
+  }
+
+  .categories-section .basic-button {
+    width: 50%;
+    margin: 1.2rem auto;
+  }
 }

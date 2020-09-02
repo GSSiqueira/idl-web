@@ -19,7 +19,6 @@
   flex-direction: column;
   justify-content: flex-start;
   padding-bottom: 2rem;
-  border-bottom: 2px solid black;
 }
 
 @media screen and (min-width: 1024px) {
@@ -35,7 +34,6 @@
   }
 
   .flux-section {
-    border: none;
     align-items: center;
     grid-area: flux;
   }
@@ -64,8 +62,10 @@
     grid-area: category;
   }
 
-  .submit-button {
+  .flux-content .submit-button {
     grid-area: button;
+
+    align-self: flex-end;
   }
 
   .main-title {

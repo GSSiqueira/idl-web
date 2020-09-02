@@ -32,6 +32,13 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
     setCategoryType(event.target.value);
   };
 
+  const handleDeleteCategory = (id: number) => {
+    const newCategoriesList = categoriesList.filter((category) => {
+      return category.id !== id;
+    });
+    setCategoriesList(newCategoriesList);
+  };
+
   return (
     <>
       <Header />
@@ -57,7 +64,10 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
             />
             <BasicButton label="Enviar" name="submit-button" type="submit" />
           </form>
-          <CategoriesTable categories={categoriesList} />
+          <CategoriesTable
+            categories={categoriesList}
+            handleDeleteCategory={handleDeleteCategory}
+          />
         </section>
       </main>
     </>
