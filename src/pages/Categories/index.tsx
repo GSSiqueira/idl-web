@@ -21,8 +21,14 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
 
   useEffect(() => {
-    setCategoriesList(categoriesController.getCategories());
+    setCategoriesList(categoriesController.getAllCategories());
+    console.log('USEEFFECT FOR GETTING CATEGORY LIST');
   }, []);
+
+  const clearFields = () => {
+    setCategoryName('');
+    setCategoryType('');
+  };
 
   const handleNewName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCategoryName(event.target.value);
@@ -39,13 +45,30 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
     setCategoriesList(newCategoriesList);
   };
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (categoryType && categoryName) {
+      const newCategory: Category = {
+        id: categoriesController.getNextIdNumber(),
+        name: categoryName,
+        type: parseInt(categoryType),
+      };
+      console.log(newCategory);
+      categoriesController.addCategory(newCategory);
+      setCategoriesList([...categoriesList, newCategory]);
+      clearFields();
+    } else {
+      console.log('INVALID DATA VALUES');
+    }
+  };
+
   return (
     <>
       <Header />
       <main className="categories-content container">
         <h1 className="main-title">Lista de Categorias</h1>
         <section className="categories-section">
-          <form>
+          <form onSubmit={handleSubmit}>
             <BasicInput
               label="Nome"
               type="text"

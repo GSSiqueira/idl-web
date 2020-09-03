@@ -30,12 +30,12 @@ const Flux: React.FC<FluxPageProps> = ({
   const [entryList, setEntryList] = useState<Entry[]>([]);
 
   useEffect(() => {
-    setCategoryList(categoriesController.getCategories());
-    setEntryList(dailyFluxController.getEntriesList(entriesDate));
+    setCategoryList(categoriesController.getAllCategories());
+    setEntryList(dailyFluxController.getEntriesByDate(entriesDate));
   }, []);
 
   useEffect(() => {
-    setEntryList(dailyFluxController.getEntriesList(entriesDate));
+    setEntryList(dailyFluxController.getEntriesByDate(entriesDate));
   }, [entriesDate]);
 
   const clearFields = () => {

@@ -46,7 +46,7 @@ class DailyFluxController {
     ];
   }
 
-  getEntriesList(date: Date): Array<Entry> {
+  getEntriesByDate(date: Date): Array<Entry> {
     const dateEntries = this.entries.filter((entry) => {
       return getISODate(entry.time) === getISODate(date);
     });

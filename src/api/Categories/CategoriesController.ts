@@ -74,8 +74,23 @@ class CategoriesController {
     ];
   }
 
-  getCategories() {
-    return this.categories;
+  getNextIdNumber(): number {
+    this.maxId++;
+    return this.maxId;
+  }
+
+  getAllCategories() {
+    return [...this.categories];
+  }
+
+  getCategoryByType(type: CategoryType) {
+    return this.categories.filter((category) => {
+      return category.type === type;
+    });
+  }
+
+  addCategory(category: Category) {
+    this.categories.push(category);
   }
 }
 
