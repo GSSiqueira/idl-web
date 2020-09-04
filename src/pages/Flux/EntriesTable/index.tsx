@@ -17,7 +17,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
   entries,
   handleDeleteEntry,
 }) => {
-  const dailyTotal = entries.reduce((total, entry) => {
+  const totalSalesOfTheDay = entries.reduce((total, entry) => {
     return (
       total +
       entry.value * (entry.category.type === CategoryType.EntradaCaixa ? -1 : 1)
@@ -49,9 +49,9 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
                   ? 'negative-value'
                   : 'positive-value'
               }
-              key={entry.time.getTime()}
+              key={entry.date.getTime()}
             >
-              <td>{getTimeFormated(entry.time)}</td>
+              <td>{getTimeFormated(entry.date)}</td>
               <td>{entry.category.name}</td>
               <td>{`R$ ${entry.value.toFixed(2)}`}</td>
               <td>
@@ -63,7 +63,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
                         'Tem certeza que deseja deletar esta entrada?'
                       )
                     ) {
-                      handleDeleteEntry(entry.time.getTime());
+                      handleDeleteEntry(entry.date.getTime());
                     }
                   }}
                   icon={faTrashAlt}
@@ -82,7 +82,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
         </tr>
         <tr className="positive-value">
           <td colSpan={2}>Total Vendas:</td>
-          <td colSpan={2}>{`R$ ${dailyTotal.toFixed(2)}`}</td>
+          <td colSpan={2}>{`R$ ${totalSalesOfTheDay.toFixed(2)}`}</td>
         </tr>
       </tfoot>
     </table>

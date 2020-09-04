@@ -3,7 +3,7 @@ import { getISODate } from '../../services/DateServices';
 
 export interface Entry {
   id?: number;
-  time: Date;
+  date: Date;
   value: number;
   category: Category;
 }
@@ -15,7 +15,7 @@ class DailyFluxController {
     this.entries = [
       {
         id: 1,
-        time: new Date(1598131624143),
+        date: new Date(1598131624143),
         value: 1000.0,
         category: {
           id: 1,
@@ -25,7 +25,7 @@ class DailyFluxController {
       },
       {
         id: 2,
-        time: new Date(1598121324149),
+        date: new Date(1598121324149),
         value: 10.0,
         category: {
           id: 4,
@@ -35,7 +35,7 @@ class DailyFluxController {
       },
       {
         id: 3,
-        time: new Date(1598134324443),
+        date: new Date(1598134324443),
         value: 3000.0,
         category: {
           id: 2,
@@ -48,7 +48,7 @@ class DailyFluxController {
 
   getEntriesByDate(date: Date): Array<Entry> {
     const dateEntries = this.entries.filter((entry) => {
-      return getISODate(entry.time) === getISODate(date);
+      return getISODate(entry.date) === getISODate(date);
     });
     return dateEntries;
   }

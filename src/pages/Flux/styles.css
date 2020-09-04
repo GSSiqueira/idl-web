@@ -21,17 +21,6 @@
 }
 
 @media screen and (min-width: 1024px) {
-  /*   .flux-content {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    column-gap: 1rem;
-    grid-template-areas:
-      'title title'
-      'flux flux';
-  } */
-
   .flux-content {
     width: 100%;
   }
@@ -44,7 +33,7 @@
     grid-template-areas: 'form table';
   }
 
-  .flux-content form {
+  .flux-section form {
     grid-area: form;
     width: 100%;
     justify-content: flex-start;

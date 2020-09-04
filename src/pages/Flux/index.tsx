@@ -24,7 +24,7 @@ const Flux: React.FC<FluxPageProps> = ({
   categoriesController,
 }) => {
   const [newValue, setNewValue] = useState(0.0);
-  const [newCategory, setNewCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [entriesDate, setEntriesDate] = useState<Date>(new Date());
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [entryList, setEntryList] = useState<Entry[]>([]);
@@ -40,7 +40,26 @@ const Flux: React.FC<FluxPageProps> = ({
 
   const clearFields = () => {
     setNewValue(0);
-    setNewCategory('');
+    setSelectedCategory('');
+  };
+
+  const validateFieldValues = () => {
+    if (selectedCategory && newValue > 0) {
+      return true;
+    }
+    return false;
+  };
+
+  const validateSelectedDate = (): Date | null => {
+    if (checkSameDate(entriesDate)) {
+      return new Date();
+    } else if (
+      window.confirm('Deseja mesmo adicionar uma entrada para uma outra data ?')
+    ) {
+      return entriesDate;
+    } else {
+      return null;
+    }
   };
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,39 +73,35 @@ const Flux: React.FC<FluxPageProps> = ({
   };
 
   const handleNewCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setNewCategory(event.target.value);
+    setSelectedCategory(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const category = categoryList.filter((c) => {
-      return c.id === parseInt(newCategory);
-    })[0];
 
-    const entryDate = checkSameDate(entriesDate) ? new Date() : entriesDate;
-
-    if (
-      checkSameDate(entriesDate) ||
-      window.confirm('Deseja mesmo adicionar uma entrada para uma outra data ?')
-    ) {
-      if (category && newValue) {
+    if (validateFieldValues()) {
+      const newEntryDate = validateSelectedDate();
+      if (newEntryDate) {
+        const category = categoryList.filter((c) => {
+          return c.id === parseInt(selectedCategory);
+        })[0];
         const newEntry: Entry = {
-          time: entryDate,
+          date: newEntryDate,
           value: newValue,
           category,
         };
         dailyFluxController.addEntry(newEntry);
         setEntryList([...entryList, newEntry]);
         clearFields();
-      } else {
-        console.log('ERROR: INCORRECT DATA INPUT.');
       }
+    } else {
+      console.log('ERROR: INCORRECT DATA INPUT.');
     }
   };
 
-  const handleDeleteEntry = (time: number) => {
-    let newEntryList = entryList.filter((entry) => {
-      return entry.time.getTime() !== time;
+  const handleDeleteEntry = (timeStamp: number) => {
+    const newEntryList = entryList.filter((entry) => {
+      return entry.date.getTime() !== timeStamp;
     });
     setEntryList(newEntryList);
   };
@@ -121,7 +136,7 @@ const Flux: React.FC<FluxPageProps> = ({
               categories={categoryList}
               label="Categoria"
               name="entry-category"
-              value={newCategory}
+              value={selectedCategory}
               handleNewCategory={handleNewCategory}
               required
             />

@@ -22,12 +22,15 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
 
   useEffect(() => {
     setCategoriesList(categoriesController.getAllCategories());
-    console.log('USEEFFECT FOR GETTING CATEGORY LIST');
   }, []);
 
   const clearFields = () => {
     setCategoryName('');
     setCategoryType('');
+  };
+
+  const validateFieldValues = () => {
+    return categoryType && categoryName;
   };
 
   const handleNewName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,22 +41,21 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
     setCategoryType(event.target.value);
   };
 
-  const handleDeleteCategory = (id: number) => {
+  const handleDeleteCategory = (idToDelete: number) => {
     const newCategoriesList = categoriesList.filter((category) => {
-      return category.id !== id;
+      return category.id !== idToDelete;
     });
     setCategoriesList(newCategoriesList);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (categoryType && categoryName) {
+    if (validateFieldValues()) {
       const newCategory: Category = {
-        id: categoriesController.getNextIdNumber(),
+        id: categoriesController.getNextIdNumber(), //Needs a better implementation ASAP
         name: categoryName,
         type: parseInt(categoryType),
       };
-      console.log(newCategory);
       categoriesController.addCategory(newCategory);
       setCategoriesList([...categoriesList, newCategory]);
       clearFields();
