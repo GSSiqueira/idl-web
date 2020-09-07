@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Entry } from '../../../api/Entries/EntriesController';
-import { CategoryType } from '../../../api/Categories/CategoriesController';
-import { getTimeFormated, getISODate } from '../../../services/DateServices';
+import { getISODate } from '../../../services/DateServices';
+import { CategoryType } from '../../../entities/Category/Category';
 
 interface RegularExpensesTableProps {
   entries: Array<Entry>;

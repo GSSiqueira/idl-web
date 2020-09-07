@@ -6,11 +6,10 @@ import BasicInput from '../../components/BasicInput';
 import EntriesTable from './EntriesTable';
 import BasicButton from '../../components/BasicButton';
 import EntriesController, { Entry } from '../../api/Entries/EntriesController';
-import CategoriesController, {
-  Category,
-} from '../../api/Categories/CategoriesController';
+import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import { getISODate, checkSameDate } from '../../services/DateServices';
+import { Category } from '../../entities/Category/Category';
 
 interface FluxPageProps {
   dailyFluxController: EntriesController;

@@ -1,12 +1,10 @@
 import React from 'react';
-import {
-  Category,
-  CategoryTypes,
-} from '../../../api/Categories/CategoriesController';
+import { CategoryTypes } from '../../../api/Categories/CategoriesController';
 import './styles.css';
 import '../../../components/BasicTable/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Category } from '../../../entities/Category/Category';
 
 interface CategoriesTableProps {
   categories: Array<Category>;

@@ -1,5 +1,5 @@
-import { Category, CategoryType } from '../Categories/CategoriesController';
 import { getISODate } from '../../services/DateServices';
+import { Category, CategoryType } from '../../entities/Category/Category';
 
 export interface Entry {
   id?: number;

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 
 import CategoriesController, {
-  Category,
   CategoryTypes,
 } from '../../api/Categories/CategoriesController';
 import Header from '../../components/Header';
@@ -10,6 +9,7 @@ import BasicInput from '../../components/BasicInput';
 import BasicButton from '../../components/BasicButton';
 import CategoriesTable from './CategoriesTable';
 import CategoriesSelect from '../../components/CategoriesSelect';
+import { Category } from '../../entities/Category/Category';
 
 interface CategoriesProps {
   categoriesController: CategoriesController;

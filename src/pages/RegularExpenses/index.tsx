@@ -5,9 +5,7 @@ import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import BasicButton from '../../components/BasicButton';
 import EntriesController, { Entry } from '../../api/Entries/EntriesController';
-import CategoriesController, {
-  Category,
-} from '../../api/Categories/CategoriesController';
+import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import {
   getISODate,
@@ -15,6 +13,7 @@ import {
   getISOMonth,
 } from '../../services/DateServices';
 import RegularExpensesTable from './RegularExpensesTable';
+import { Category } from '../../entities/Category/Category';
 
 interface RegularExpensesPageProps {
   dailyFluxController: EntriesController;

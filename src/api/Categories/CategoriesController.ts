@@ -1,22 +1,7 @@
-export interface Category {
-  id: number;
-  name: string;
-  type: CategoryType;
-}
+import { IBasicCategory } from '../../entities/Category/IBasicCategory';
+import { CategoryType, Category } from '../../entities/Category/Category';
 
-export interface SelectCategory {
-  id: number;
-  name: string;
-}
-
-export enum CategoryType {
-  EntradaCaixa = 0,
-  FechamentoCaixa = 1,
-  DespesaDiaria = 2,
-  DespesaFixa = 3,
-}
-
-export const CategoryTypes: SelectCategory[] = [
+export const CategoryTypes: IBasicCategory[] = [
   {
     id: CategoryType.EntradaCaixa,
     name: 'Entrada no Caixa',
