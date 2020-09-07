@@ -1,0 +1,52 @@
+.regular-expenses-content {
+  display: flex;
+  flex-flow: column wrap;
+}
+.regular-expenses-content form {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+  margin: 0;
+}
+
+.main-title {
+  width: 70%;
+}
+
+.regular-expenses-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .regular-expenses-content {
+    width: 100%;
+  }
+
+  .regular-expenses-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto;
+    column-gap: 1rem;
+    grid-template-areas: 'form table';
+  }
+
+  .regular-expensessection form {
+    grid-area: form;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .regular-expenses-section .submit-button {
+    width: 50%;
+    margin: 1.2rem auto;
+  }
+
+  .regular-expenses-section table {
+    grid-area: table;
+    width: 100%;
+  }
+}

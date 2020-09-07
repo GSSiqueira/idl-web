@@ -50,7 +50,7 @@ function Header() {
           </li>
 
           <li>
-            <Link to="/">
+            <Link to="/fixos">
               <FontAwesomeIcon icon={faFileInvoiceDollar} />
               Fixos
             </Link>

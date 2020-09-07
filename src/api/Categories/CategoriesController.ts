@@ -37,7 +37,7 @@ export const CategoryTypes: SelectCategory[] = [
 
 class CategoriesController {
   categories: Array<Category> = [];
-  maxId: number = 6;
+  maxId: number = 7;
 
   constructor() {
     this.categories = [
@@ -71,6 +71,11 @@ class CategoriesController {
         name: 'Compras',
         type: CategoryType.DespesaDiaria,
       },
+      {
+        id: 7,
+        name: 'Camarão',
+        type: CategoryType.DespesaFixa,
+      },
     ];
   }
 
@@ -79,18 +84,30 @@ class CategoriesController {
     return this.maxId;
   }
 
-  getAllCategories() {
-    return [...this.categories];
+  async getAllCategories() {
+    return await [...this.categories];
   }
 
-  getCategoryByType(type: CategoryType) {
-    return this.categories.filter((category) => {
+  async getDailyCategories() {
+    return await this.categories.filter((category) => {
+      return category.type !== CategoryType.DespesaFixa;
+    });
+  }
+
+  async getRegularExpenseCategories() {
+    return await this.categories.filter((category) => {
+      return category.type === CategoryType.DespesaFixa;
+    });
+  }
+
+  async getCategoryByType(type: CategoryType) {
+    return await this.categories.filter((category) => {
       return category.type === type;
     });
   }
 
-  addCategory(category: Category) {
-    this.categories.push(category);
+  async addCategory(category: Category) {
+    await this.categories.push(category);
   }
 }
 

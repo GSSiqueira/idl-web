@@ -4,7 +4,7 @@ import '../../../components/BasicTable/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Entry } from '../../../api/DailyFlux/DailyFluxController';
+import { Entry } from '../../../api/Entries/EntriesController';
 import { CategoryType } from '../../../api/Categories/CategoriesController';
 import { getTimeFormated } from '../../../services/DateServices';
 

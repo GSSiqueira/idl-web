@@ -10,6 +10,10 @@ export function getISODate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+export function getISOMonth(date: Date): string {
+  return date.toISOString().slice(0, 7);
+}
+
 export function checkSameDate(date: Date): boolean {
   let today = new Date();
   return getISODate(today) === getISODate(date);

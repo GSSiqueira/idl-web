@@ -5,9 +5,7 @@ import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import EntriesTable from './EntriesTable';
 import BasicButton from '../../components/BasicButton';
-import DailyFluxController, {
-  Entry,
-} from '../../api/DailyFlux/DailyFluxController';
+import EntriesController, { Entry } from '../../api/Entries/EntriesController';
 import CategoriesController, {
   Category,
 } from '../../api/Categories/CategoriesController';
@@ -15,11 +13,11 @@ import CategoriesSelect from '../../components/CategoriesSelect';
 import { getISODate, checkSameDate } from '../../services/DateServices';
 
 interface FluxPageProps {
-  dailyFluxController: DailyFluxController;
+  dailyFluxController: EntriesController;
   categoriesController: CategoriesController;
 }
 
-const Flux: React.FC<FluxPageProps> = ({
+const DailyReport: React.FC<FluxPageProps> = ({
   dailyFluxController,
   categoriesController,
 }) => {
@@ -30,7 +28,9 @@ const Flux: React.FC<FluxPageProps> = ({
   const [entryList, setEntryList] = useState<Entry[]>([]);
 
   useEffect(() => {
-    setCategoryList(categoriesController.getAllCategories());
+    categoriesController.getDailyCategories().then((categoriesListFromApi) => {
+      setCategoryList(categoriesListFromApi);
+    });
     setEntryList(dailyFluxController.getEntriesByDate(entriesDate));
   }, []);
 
@@ -69,7 +69,6 @@ const Flux: React.FC<FluxPageProps> = ({
   const handleNewDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(event.target.value + 'T00:00:00');
     setEntriesDate(newDate);
-    //Timing problem here on setState
   };
 
   const handleNewCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -153,4 +152,4 @@ const Flux: React.FC<FluxPageProps> = ({
   );
 };
 
-export default Flux;
+export default DailyReport;

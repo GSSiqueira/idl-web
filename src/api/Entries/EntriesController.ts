@@ -8,7 +8,7 @@ export interface Entry {
   category: Category;
 }
 
-class DailyFluxController {
+class EntriesController {
   entries: Array<Entry> = [];
 
   constructor() {
@@ -58,4 +58,4 @@ class DailyFluxController {
   }
 }
 
-export default DailyFluxController;
+export default EntriesController;

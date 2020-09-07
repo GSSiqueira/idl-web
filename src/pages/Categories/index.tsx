@@ -21,7 +21,9 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
 
   useEffect(() => {
-    setCategoriesList(categoriesController.getAllCategories());
+    categoriesController.getAllCategories().then((categoriesListFromApi) => {
+      setCategoriesList(categoriesListFromApi);
+    });
   }, []);
 
   const clearFields = () => {
