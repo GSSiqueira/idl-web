@@ -3,9 +3,8 @@ import './styles.css';
 import '../../../components/BasicTable/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
-import { Entry } from '../../../api/Entries/EntriesController';
 import { CategoryType } from '../../../entities/Category/Category';
+import { Entry } from '../../../entities/Entry/Entry';
 
 interface RegularExpensesTableProps {
   entries: Array<Entry>;
@@ -17,7 +16,7 @@ const RegularExpensesTable: React.FC<RegularExpensesTableProps> = ({
   handleDeleteEntry,
 }) => {
   const expensesTotal = entries.reduce((total, entry) => {
-    return total + entry.value;
+    return total + entry.getValue();
   }, 0);
 
   return (
@@ -35,15 +34,15 @@ const RegularExpensesTable: React.FC<RegularExpensesTableProps> = ({
           return (
             <tr
               className={
-                entry.category.type === CategoryType.DespesaDiaria
+                entry.getCategory().type === CategoryType.DespesaDiaria
                   ? 'negative-value'
                   : 'positive-value'
               }
-              key={entry.date.getTime()}
+              key={entry.getId()}
             >
-              <td>{entry.date.toLocaleString()}</td>
-              <td>{entry.category.name}</td>
-              <td>{`R$ ${entry.value.toFixed(2)}`}</td>
+              <td>{entry.getFormatedDate()}</td>
+              <td>{entry.getCategory().name}</td>
+              <td>{entry.getFormatedValue()}</td>
               <td>
                 <FontAwesomeIcon
                   className="delete-button"
@@ -53,7 +52,7 @@ const RegularExpensesTable: React.FC<RegularExpensesTableProps> = ({
                         'Tem certeza que deseja deletar esta entrada?'
                       )
                     ) {
-                      handleDeleteEntry(entry.date.getTime());
+                      handleDeleteEntry(entry.getId());
                     }
                   }}
                   icon={faTrashAlt}

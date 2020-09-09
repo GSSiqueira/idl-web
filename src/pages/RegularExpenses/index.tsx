@@ -4,12 +4,15 @@ import './styles.css';
 import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import BasicButton from '../../components/BasicButton';
-import EntriesController, { Entry } from '../../api/Entries/EntriesController';
+import EntriesController, {
+  EntryDTO,
+} from '../../api/Entries/EntriesController';
 import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import RegularExpensesTable from './RegularExpensesTable';
 import { getISOMonth, checkSameMonth } from '../../services/DateServices';
 import { Category } from '../../entities/Category/Category';
+import { Entry } from '../../entities/Entry/Entry';
 
 interface RegularExpensesPageProps {
   entriesController: EntriesController;
@@ -56,30 +59,21 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
     setSelectedCategory(event.target.value);
   };
 
-  const handleDeleteEntry = (timeStamp: number) => {
-    const newEntryList = entryList.filter((entry) => {
-      return entry.date.getTime() !== timeStamp;
-    });
-    setEntryList(newEntryList);
+  const handleDeleteEntry = (idToDelete: number) => {
+    if (entriesController.removeEntry(idToDelete)) {
+      setEntryList(
+        entriesController.getRegularExpensesEntriesByMonth(entriesDate)
+      );
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (validateFieldValues()) {
-      const newEntryDate = validateSelectedDate();
-      if (newEntryDate) {
-        const newCategory = categoryList.filter((c) => {
-          return c.id === parseInt(selectedCategory);
-        })[0];
-        const newEntry: Entry = {
-          date: newEntryDate,
-          value: newValue,
-          category: newCategory,
-        };
-        entriesController.addEntry(newEntry);
-        setEntryList([...entryList, newEntry]);
-        clearFields();
-      }
+    const newEntryData = validateFieldValues();
+    if (newEntryData) {
+      const newEntry = entriesController.addEntry(newEntryData);
+      setEntryList([...entryList, newEntry]);
+      clearFields();
     } else {
       console.log('ERROR: INCORRECT DATA INPUT.');
     }
@@ -90,23 +84,27 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
     setSelectedCategory('');
   };
 
-  const validateFieldValues = () => {
-    if (selectedCategory && newValue > 0) {
-      return true;
+  const validateFieldValues = (): EntryDTO | null => {
+    if (selectedCategory && newValue) {
+      const values: EntryDTO = {
+        value: newValue,
+        categoryId: parseInt(selectedCategory),
+        date: new Date(),
+      };
+      if (checkSameMonth(entriesDate)) {
+        return values;
+      } else if (
+        window.confirm(
+          'Deseja mesmo adicionar uma entrada para uma outra data ?'
+        )
+      ) {
+        values.date = entriesDate;
+        return values;
+      } else {
+        return null;
+      }
     }
-    return false;
-  };
-
-  const validateSelectedDate = (): Date | null => {
-    if (checkSameMonth(entriesDate)) {
-      return new Date();
-    } else if (
-      window.confirm('Deseja mesmo adicionar uma entrada para um outro mês ?')
-    ) {
-      return entriesDate;
-    } else {
-      return null;
-    }
+    return null;
   };
 
   return (

@@ -1,7 +1,12 @@
 import { IBasicCategory } from '../../entities/Category/IBasicCategory';
 import { CategoryType, Category } from '../../entities/Category/Category';
 
-export const CategoryTypes: IBasicCategory[] = [
+export interface CategoryDTO {
+  name: string;
+  type: CategoryType;
+}
+
+export const CategoryTypeList: IBasicCategory[] = [
   {
     id: CategoryType.EntradaCaixa,
     name: 'Entrada no Caixa',
@@ -22,7 +27,6 @@ export const CategoryTypes: IBasicCategory[] = [
 
 class CategoriesController {
   categories: Array<Category> = [];
-  maxId: number = 7;
 
   constructor() {
     this.categories = [
@@ -64,11 +68,6 @@ class CategoriesController {
     ];
   }
 
-  getNextIdNumber(): number {
-    this.maxId++;
-    return this.maxId;
-  }
-
   async getAllCategories() {
     return await [...this.categories];
   }
@@ -91,8 +90,10 @@ class CategoriesController {
     });
   }
 
-  async addCategory(category: Category) {
-    await this.categories.push(category);
+  async addCategory(categoryData: CategoryDTO) {
+    const newCategory = new Category(99, categoryData.name, categoryData.type);
+    await this.categories.push(newCategory);
+    return newCategory;
   }
 }
 

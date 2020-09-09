@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryTypes } from '../../../api/Categories/CategoriesController';
+import { CategoryTypeList } from '../../../api/Categories/CategoriesController';
 import './styles.css';
 import '../../../components/BasicTable/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,7 +31,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({
               <td>{category.name}</td>
               <td>
                 {
-                  CategoryTypes.filter((type) => {
+                  CategoryTypeList.filter((type) => {
                     return type.id === category.type;
                   })[0].name
                 }

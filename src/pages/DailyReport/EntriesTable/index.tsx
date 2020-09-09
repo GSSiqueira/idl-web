@@ -3,10 +3,8 @@ import './styles.css';
 import '../../../components/BasicTable/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-
-import { Entry } from '../../../api/Entries/EntriesController';
-import { getTimeFormated } from '../../../services/DateServices';
 import { CategoryType } from '../../../entities/Category/Category';
+import { Entry } from '../../../entities/Entry/Entry';
 
 interface EntriesTableProps {
   entries: Array<Entry>;
@@ -20,13 +18,15 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
   const totalSalesOfTheDay = entries.reduce((total, entry) => {
     return (
       total +
-      entry.value * (entry.category.type === CategoryType.EntradaCaixa ? -1 : 1)
+      entry.getValue() *
+        (entry.getCategory().type === CategoryType.EntradaCaixa ? -1 : 1)
     );
   }, 0);
   const expensesTotal = entries.reduce((total, entry) => {
     return (
       total +
-      entry.value * (entry.category.type === CategoryType.DespesaDiaria ? 1 : 0)
+      entry.getValue() *
+        (entry.getCategory().type === CategoryType.DespesaDiaria ? 1 : 0)
     );
   }, 0);
 
@@ -45,15 +45,15 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
           return (
             <tr
               className={
-                entry.category.type === CategoryType.DespesaDiaria
+                entry.getCategory().type === CategoryType.DespesaDiaria
                   ? 'negative-value'
                   : 'positive-value'
               }
-              key={entry.date.getTime()}
+              key={entry.getId()}
             >
-              <td>{getTimeFormated(entry.date)}</td>
-              <td>{entry.category.name}</td>
-              <td>{`R$ ${entry.value.toFixed(2)}`}</td>
+              <td>{entry.getFormatedTime()}</td>
+              <td>{entry.getCategory().name}</td>
+              <td>{entry.getFormatedValue()}</td>
               <td>
                 <FontAwesomeIcon
                   className="delete-button"
@@ -63,7 +63,7 @@ const EntriesTable: React.FC<EntriesTableProps> = ({
                         'Tem certeza que deseja deletar esta entrada?'
                       )
                     ) {
-                      handleDeleteEntry(entry.date.getTime());
+                      handleDeleteEntry(entry.getId());
                     }
                   }}
                   icon={faTrashAlt}

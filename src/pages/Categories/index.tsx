@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 
 import CategoriesController, {
-  CategoryTypes,
+  CategoryTypeList,
+  CategoryDTO,
 } from '../../api/Categories/CategoriesController';
 import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
@@ -26,15 +27,6 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
     });
   }, []);
 
-  const clearFields = () => {
-    setCategoryName('');
-    setCategoryType('');
-  };
-
-  const validateFieldValues = () => {
-    return categoryType && categoryName;
-  };
-
   const handleNewName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCategoryName(event.target.value);
   };
@@ -52,17 +44,31 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (validateFieldValues()) {
-      const newCategory: Category = {
-        id: categoriesController.getNextIdNumber(), //Needs a better implementation ASAP
+    const newCategoryData = validateFieldValues();
+    if (newCategoryData) {
+      categoriesController.addCategory(newCategoryData).then((newCategory) => {
+        setCategoriesList([...categoriesList, newCategory]);
+        clearFields();
+      });
+    } else {
+      console.log('INVALID DATA VALUES');
+    }
+  };
+
+  const clearFields = () => {
+    setCategoryName('');
+    setCategoryType('');
+  };
+
+  const validateFieldValues = (): CategoryDTO | null => {
+    if (categoryName && categoryType) {
+      const values: CategoryDTO = {
         name: categoryName,
         type: parseInt(categoryType),
       };
-      categoriesController.addCategory(newCategory);
-      setCategoriesList([...categoriesList, newCategory]);
-      clearFields();
+      return values;
     } else {
-      console.log('INVALID DATA VALUES');
+      return null;
     }
   };
 
@@ -85,7 +91,7 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
             <CategoriesSelect
               label="Tipo de Categoria:"
               name="category-type"
-              categories={CategoryTypes}
+              categories={CategoryTypeList}
               handleNewCategory={handleNewType}
               value={categoryType}
             />

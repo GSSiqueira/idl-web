@@ -5,18 +5,21 @@ import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import EntriesTable from './EntriesTable';
 import BasicButton from '../../components/BasicButton';
-import EntriesController, { Entry } from '../../api/Entries/EntriesController';
+import EntriesController, {
+  EntryDTO,
+} from '../../api/Entries/EntriesController';
 import CategoriesController from '../../api/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import { getISODate, checkSameDate } from '../../services/DateServices';
 import { Category } from '../../entities/Category/Category';
+import { Entry } from '../../entities/Entry/Entry';
 
-interface FluxPageProps {
+interface DailyReportPageProps {
   entriesController: EntriesController;
   categoriesController: CategoriesController;
 }
 
-const DailyReport: React.FC<FluxPageProps> = ({
+const DailyReport: React.FC<DailyReportPageProps> = ({
   entriesController,
   categoriesController,
 }) => {
@@ -37,30 +40,6 @@ const DailyReport: React.FC<FluxPageProps> = ({
     setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
   }, [entriesDate]);
 
-  const clearFields = () => {
-    setNewValue(0);
-    setSelectedCategory('');
-  };
-
-  const validateFieldValues = () => {
-    if (selectedCategory && newValue > 0) {
-      return true;
-    }
-    return false;
-  };
-
-  const validateSelectedDate = (): Date | null => {
-    if (checkSameDate(entriesDate)) {
-      return new Date();
-    } else if (
-      window.confirm('Deseja mesmo adicionar uma entrada para uma outra data ?')
-    ) {
-      return entriesDate;
-    } else {
-      return null;
-    }
-  };
-
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewValue(parseFloat(event.target.value));
   };
@@ -76,32 +55,48 @@ const DailyReport: React.FC<FluxPageProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (validateFieldValues()) {
-      const newEntryDate = validateSelectedDate();
-      if (newEntryDate) {
-        const category = categoryList.filter((c) => {
-          return c.id === parseInt(selectedCategory);
-        })[0];
-        const newEntry: Entry = {
-          date: newEntryDate,
-          value: newValue,
-          category,
-        };
-        entriesController.addEntry(newEntry);
-        setEntryList([...entryList, newEntry]);
-        clearFields();
-      }
+    const newEntryData = validateFieldValues();
+    if (newEntryData) {
+      const newEntry = entriesController.addEntry(newEntryData);
+      setEntryList([...entryList, newEntry]);
+      clearFields();
     } else {
       console.log('ERROR: INCORRECT DATA INPUT.');
     }
   };
 
-  const handleDeleteEntry = (timeStamp: number) => {
-    const newEntryList = entryList.filter((entry) => {
-      return entry.date.getTime() !== timeStamp;
-    });
-    setEntryList(newEntryList);
+  const clearFields = () => {
+    setNewValue(0);
+    setSelectedCategory('');
+  };
+
+  const validateFieldValues = (): EntryDTO | null => {
+    if (selectedCategory && newValue) {
+      const values: EntryDTO = {
+        value: newValue,
+        categoryId: parseInt(selectedCategory),
+        date: new Date(),
+      };
+      if (checkSameDate(entriesDate)) {
+        return values;
+      } else if (
+        window.confirm(
+          'Deseja mesmo adicionar uma entrada para uma outra data ?'
+        )
+      ) {
+        values.date = entriesDate;
+        return values;
+      } else {
+        return null;
+      }
+    }
+    return null;
+  };
+
+  const handleDeleteEntry = (idToDelete: number) => {
+    if (entriesController.removeEntry(idToDelete)) {
+      setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
+    }
   };
 
   return (
