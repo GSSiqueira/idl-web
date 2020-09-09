@@ -18,3 +18,8 @@ export function checkSameDate(date: Date): boolean {
   let today = new Date();
   return getISODate(today) === getISODate(date);
 }
+
+export function checkSameMonth(date: Date): boolean {
+  let today = new Date();
+  return getISOMonth(today) === getISOMonth(date);
+}

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Entry } from '../../../api/Entries/EntriesController';
-import { getISODate } from '../../../services/DateServices';
 import { CategoryType } from '../../../entities/Category/Category';
 
 interface RegularExpensesTableProps {
@@ -42,7 +41,7 @@ const RegularExpensesTable: React.FC<RegularExpensesTableProps> = ({
               }
               key={entry.date.getTime()}
             >
-              <td>{getISODate(entry.date)}</td>
+              <td>{entry.date.toLocaleString()}</td>
               <td>{entry.category.name}</td>
               <td>{`R$ ${entry.value.toFixed(2)}`}</td>
               <td>

@@ -12,12 +12,12 @@ import { getISODate, checkSameDate } from '../../services/DateServices';
 import { Category } from '../../entities/Category/Category';
 
 interface FluxPageProps {
-  dailyFluxController: EntriesController;
+  entriesController: EntriesController;
   categoriesController: CategoriesController;
 }
 
 const DailyReport: React.FC<FluxPageProps> = ({
-  dailyFluxController,
+  entriesController,
   categoriesController,
 }) => {
   const [newValue, setNewValue] = useState(0.0);
@@ -30,11 +30,11 @@ const DailyReport: React.FC<FluxPageProps> = ({
     categoriesController.getDailyCategories().then((categoriesListFromApi) => {
       setCategoryList(categoriesListFromApi);
     });
-    setEntryList(dailyFluxController.getEntriesByDate(entriesDate));
+    setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
   }, []);
 
   useEffect(() => {
-    setEntryList(dailyFluxController.getEntriesByDate(entriesDate));
+    setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
   }, [entriesDate]);
 
   const clearFields = () => {
@@ -88,7 +88,7 @@ const DailyReport: React.FC<FluxPageProps> = ({
           value: newValue,
           category,
         };
-        dailyFluxController.addEntry(newEntry);
+        entriesController.addEntry(newEntry);
         setEntryList([...entryList, newEntry]);
         clearFields();
       }

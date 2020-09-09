@@ -1,4 +1,4 @@
-import { getISODate } from '../../services/DateServices';
+import { getISODate, getISOMonth } from '../../services/DateServices';
 import { Category, CategoryType } from '../../entities/Category/Category';
 
 export interface Entry {
@@ -43,12 +43,35 @@ class EntriesController {
           type: CategoryType.FechamentoCaixa,
         },
       },
+      {
+        id: 3,
+        date: new Date(),
+        value: 300.0,
+        category: {
+          id: 7,
+          name: 'Camarão',
+          type: CategoryType.DespesaFixa,
+        },
+      },
     ];
   }
 
-  getEntriesByDate(date: Date): Array<Entry> {
+  getDailyEntriesByDate(date: Date): Array<Entry> {
     const dateEntries = this.entries.filter((entry) => {
-      return getISODate(entry.date) === getISODate(date);
+      return (
+        getISODate(entry.date) === getISODate(date) &&
+        entry.category.type !== CategoryType.DespesaFixa
+      );
+    });
+    return dateEntries;
+  }
+
+  getRegularExpensesEntriesByMonth(date: Date): Array<Entry> {
+    const dateEntries = this.entries.filter((entry) => {
+      return (
+        getISOMonth(entry.date) === getISOMonth(date) &&
+        entry.category.type === CategoryType.DespesaFixa
+      );
     });
     return dateEntries;
   }

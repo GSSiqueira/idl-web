@@ -10,7 +10,7 @@ import DailyReport from './pages/DailyReport';
 import RegularExpenses from './pages/RegularExpenses';
 
 function App() {
-  const dailyFluxController = new EntriesController();
+  const entriesController = new EntriesController();
   const categoriesController = new CategoriesController();
 
   return (
@@ -18,7 +18,7 @@ function App() {
       <Route path="/" component={Home} exact />
       <Route path="/caixa">
         <DailyReport
-          dailyFluxController={dailyFluxController}
+          entriesController={entriesController}
           categoriesController={categoriesController}
         />
       </Route>
@@ -27,7 +27,7 @@ function App() {
       </Route>
       <Route path="/fixos">
         <RegularExpenses
-          dailyFluxController={dailyFluxController}
+          entriesController={entriesController}
           categoriesController={categoriesController}
         />
       </Route>
