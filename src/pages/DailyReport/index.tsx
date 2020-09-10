@@ -55,13 +55,13 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const newEntryData = validateFieldValues();
-    if (newEntryData) {
+    try {
+      const newEntryData = validateFieldValues();
       const newEntry = entriesController.addEntry(newEntryData);
       setEntryList([...entryList, newEntry]);
       clearFields();
-    } else {
-      console.log('ERROR: INCORRECT DATA INPUT.');
+    } catch (err) {
+      console.log(err.message);
     }
   };
 
@@ -70,7 +70,7 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
     setSelectedCategory('');
   };
 
-  const validateFieldValues = (): EntryDTO | null => {
+  const validateFieldValues = (): EntryDTO => {
     if (selectedCategory && newValue) {
       const values: EntryDTO = {
         value: newValue,
@@ -87,10 +87,10 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
         values.date = entriesDate;
         return values;
       } else {
-        return null;
+        throw new Error('Cancelled by user.');
       }
     }
-    return null;
+    throw new Error('Invalid data.');
   };
 
   const handleDeleteEntry = (idToDelete: number) => {
