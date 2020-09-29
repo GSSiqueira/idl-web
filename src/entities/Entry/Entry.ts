@@ -5,6 +5,7 @@ export class Entry {
   constructor(
     private id: number,
     private date: Date,
+    private time: Date,
     private value: number,
     private category: Category
   ) {}
@@ -14,6 +15,9 @@ export class Entry {
   }
   getDate() {
     return this.date;
+  }
+  getTime() {
+    return this.time;
   }
   getValue() {
     return this.value;

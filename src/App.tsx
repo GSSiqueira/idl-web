@@ -2,16 +2,18 @@ import React from 'react';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 
-import EntriesController from './api/Entries/EntriesController';
-import CategoriesController from './api/Categories/CategoriesController';
+import EntriesController from './controllers/Entries/EntriesController';
+import CategoriesController from './controllers/Categories/CategoriesController';
 import Categories from './pages/Categories';
 import Home from './pages/Home';
 import DailyReport from './pages/DailyReport';
 import RegularExpenses from './pages/RegularExpenses';
+import { HTTPClient } from './services/HTTPClient';
 
 function App() {
-  const entriesController = new EntriesController();
-  const categoriesController = new CategoriesController();
+  const dbConnection = new HTTPClient();
+  const entriesController = new EntriesController(dbConnection);
+  const categoriesController = new CategoriesController(dbConnection);
 
   return (
     <Switch>

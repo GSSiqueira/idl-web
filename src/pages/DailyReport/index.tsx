@@ -7,8 +7,8 @@ import EntriesTable from './EntriesTable';
 import BasicButton from '../../components/BasicButton';
 import EntriesController, {
   EntryDTO,
-} from '../../api/Entries/EntriesController';
-import CategoriesController from '../../api/Categories/CategoriesController';
+} from '../../controllers/Entries/EntriesController';
+import CategoriesController from '../../controllers/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import { getISODate, checkSameDate } from '../../services/DateServices';
 import { Category } from '../../entities/Category/Category';

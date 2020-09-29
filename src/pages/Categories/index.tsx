@@ -4,7 +4,7 @@ import './styles.css';
 import CategoriesController, {
   CategoryTypeList,
   CategoryDTO,
-} from '../../api/Categories/CategoriesController';
+} from '../../controllers/Categories/CategoriesController';
 import Header from '../../components/Header';
 import BasicInput from '../../components/BasicInput';
 import BasicButton from '../../components/BasicButton';

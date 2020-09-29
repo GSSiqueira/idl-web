@@ -1,5 +1,6 @@
 import { IBasicCategory } from '../../entities/Category/IBasicCategory';
 import { CategoryType, Category } from '../../entities/Category/Category';
+import { HTTPClient } from '../../services/HTTPClient';
 
 export interface CategoryDTO {
   name: string;
@@ -28,7 +29,7 @@ export const CategoryTypeList: IBasicCategory[] = [
 class CategoriesController {
   categories: Array<Category> = [];
 
-  constructor() {
+  constructor(private db: HTTPClient) {
     this.categories = [
       {
         id: 1,
@@ -69,7 +70,7 @@ class CategoriesController {
   }
 
   async getAllCategories() {
-    return await [...this.categories];
+    return await this.db.getAllCategories().then((response) => response.data);
   }
 
   async getDailyCategories() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryTypeList } from '../../../api/Categories/CategoriesController';
+import { CategoryTypeList } from '../../../controllers/Categories/CategoriesController';
 import './styles.css';
 import '../../../components/BasicTable/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
