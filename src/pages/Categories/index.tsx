@@ -22,9 +22,14 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
 
   useEffect(() => {
-    categoriesController.getAllCategories().then((categoriesListFromApi) => {
-      setCategoriesList(categoriesListFromApi);
-    });
+    categoriesController
+      .getAllCategories()
+      .then((categoriesListFromApi) => {
+        setCategoriesList(categoriesListFromApi);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleNewName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,22 +41,29 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
   };
 
   const handleDeleteCategory = (idToDelete: number) => {
-    const newCategoriesList = categoriesList.filter((category) => {
-      return category.id !== idToDelete;
-    });
-    setCategoriesList(newCategoriesList);
+    categoriesController
+      .removeCategory(idToDelete)
+      .then((response) => {
+        const newCategoriesList = categoriesList.filter((category) => {
+          return category.id !== idToDelete;
+        });
+        setCategoriesList(newCategoriesList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const newCategoryData = validateFieldValues();
-    if (newCategoryData) {
+    try {
+      const newCategoryData = getDataValuesIfValid();
       categoriesController.addCategory(newCategoryData).then((newCategory) => {
         setCategoriesList([...categoriesList, newCategory]);
         clearFields();
       });
-    } else {
-      console.log('INVALID DATA VALUES');
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -60,7 +72,7 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
     setCategoryType('');
   };
 
-  const validateFieldValues = (): CategoryDTO | null => {
+  const getDataValuesIfValid = (): CategoryDTO => {
     if (categoryName && categoryType) {
       const values: CategoryDTO = {
         name: categoryName,
@@ -68,7 +80,7 @@ const Categories: React.FC<CategoriesProps> = ({ categoriesController }) => {
       };
       return values;
     } else {
-      return null;
+      throw new Error('Invalid Data Values for a new Category!');
     }
   };
 

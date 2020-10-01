@@ -27,74 +27,53 @@ export const CategoryTypeList: IBasicCategory[] = [
 ];
 
 class CategoriesController {
-  categories: Array<Category> = [];
-
-  constructor(private db: HTTPClient) {
-    this.categories = [
-      {
-        id: 1,
-        name: 'Entrada no Caixa',
-        type: CategoryType.EntradaCaixa,
-      },
-      {
-        id: 2,
-        name: 'Caixa Final',
-        type: CategoryType.FechamentoCaixa,
-      },
-      {
-        id: 3,
-        name: 'Vendas Cartões',
-        type: CategoryType.FechamentoCaixa,
-      },
-      {
-        id: 4,
-        name: 'Padaria',
-        type: CategoryType.DespesaDiaria,
-      },
-      {
-        id: 5,
-        name: 'Extras',
-        type: CategoryType.DespesaDiaria,
-      },
-      {
-        id: 6,
-        name: 'Compras',
-        type: CategoryType.DespesaDiaria,
-      },
-      {
-        id: 7,
-        name: 'Camarão',
-        type: CategoryType.DespesaFixa,
-      },
-    ];
-  }
+  constructor(private db: HTTPClient) {}
 
   async getAllCategories() {
     return await this.db.getAllCategories().then((response) => response.data);
   }
 
   async getDailyCategories() {
-    return await this.categories.filter((category) => {
+    return (await this.getAllCategories()).filter((category) => {
       return category.type !== CategoryType.DespesaFixa;
     });
   }
 
   async getRegularExpenseCategories() {
-    return await this.categories.filter((category) => {
+    return (await this.getAllCategories()).filter((category) => {
       return category.type === CategoryType.DespesaFixa;
     });
   }
 
   async getCategoryByType(type: CategoryType) {
-    return await this.categories.filter((category) => {
+    return (await this.getAllCategories()).filter((category) => {
       return category.type === type;
     });
   }
 
   async addCategory(categoryData: CategoryDTO) {
-    const newCategory = new Category(99, categoryData.name, categoryData.type);
-    await this.categories.push(newCategory);
-    return newCategory;
+    return await this.db
+      .addNewCategory(categoryData)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error('Error adding new category.');
+      });
+  }
+
+  async removeCategory(id: number) {
+    return await this.db
+      .removeCategory(id)
+      .then((response) => {
+        console.log(response);
+        return response;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error('Error adding new category.');
+      });
   }
 }
 

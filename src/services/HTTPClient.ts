@@ -1,4 +1,5 @@
 import Axios, { AxiosInstance } from 'axios';
+import { CategoryDTO } from '../controllers/Categories/CategoriesController';
 import { Category } from '../entities/Category/Category';
 
 declare module 'axios' {
@@ -18,5 +19,13 @@ export class HTTPClient {
 
   getAllCategories() {
     return this.connection.get<Category[]>('/categorias');
+  }
+
+  addNewCategory(data: CategoryDTO) {
+    return this.connection.post<Category>('/categorias', { ...data });
+  }
+
+  removeCategory(id: number) {
+    return this.connection.delete(`/categorias/${id}`);
   }
 }
