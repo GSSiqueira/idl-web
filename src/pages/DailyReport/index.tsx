@@ -10,7 +10,7 @@ import EntriesController, {
 } from '../../controllers/Entries/EntriesController';
 import CategoriesController from '../../controllers/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
-import { getISODate, checkSameDate } from '../../services/DateServices';
+import { getISODate, checkSameDate, getSQLDate, getSQLTime } from '../../services/DateServices';
 import { Category } from '../../entities/Category/Category';
 import { Entry } from '../../entities/Entry/Entry';
 
@@ -33,11 +33,11 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
     categoriesController.getDailyCategories().then((categoriesListFromApi) => {
       setCategoryList(categoriesListFromApi);
     });
-    setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
+    getEntriesList();
   }, []);
 
   useEffect(() => {
-    setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
+    getEntriesList();
   }, [entriesDate]);
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,8 +57,11 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
     event.preventDefault();
     try {
       const newEntryData = validateFieldValues();
-      const newEntry = entriesController.addEntry(newEntryData);
-      setEntryList([...entryList, newEntry]);
+      entriesController.addEntry(newEntryData).then((success) => {
+        getEntriesList();
+      }).catch((error)=>{
+        console.log(error.message);
+      });
       clearFields();
     } catch (err) {
       console.log(err.message);
@@ -70,12 +73,23 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
     setSelectedCategory('');
   };
 
+  const getEntriesList = () => {
+    entriesController
+    .getDailyEntriesByDate(entriesDate)
+    .then((entriesFromApi) => {
+      setEntryList(entriesFromApi);
+    }).catch((error) => {
+      setEntryList([]);
+    });
+  }
+
   const validateFieldValues = (): EntryDTO => {
     if (selectedCategory && newValue) {
       const values: EntryDTO = {
         value: newValue,
         categoryId: parseInt(selectedCategory),
-        date: new Date(),
+        date: getSQLDate(new Date()),
+        time: getSQLTime(new Date()),
       };
       if (checkSameDate(entriesDate)) {
         return values;
@@ -84,7 +98,8 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
           'Deseja mesmo adicionar uma entrada para uma outra data ?'
         )
       ) {
-        values.date = entriesDate;
+        values.date = getSQLDate(entriesDate);
+        values.time = getSQLTime(entriesDate);
         return values;
       } else {
         throw new Error('Cancelled by user.');
@@ -95,7 +110,11 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
 
   const handleDeleteEntry = (idToDelete: number) => {
     if (entriesController.removeEntry(idToDelete)) {
-      setEntryList(entriesController.getDailyEntriesByDate(entriesDate));
+      entriesController
+        .getDailyEntriesByDate(entriesDate)
+        .then((entriesFromApi) => {
+          setEntryList(entriesFromApi);
+        });
     }
   };
 

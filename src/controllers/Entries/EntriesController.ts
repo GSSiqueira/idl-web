@@ -1,10 +1,15 @@
-import { getISODate, getISOMonth } from '../../services/DateServices';
+import {
+  getISODate,
+  getISOMonth,
+  getSQLDate,
+} from '../../services/DateServices';
 import { CategoryType } from '../../entities/Category/Category';
 import { Entry } from '../../entities/Entry/Entry';
 import { HTTPClient } from '../../services/HTTPClient';
 
 export interface EntryDTO {
-  date: Date;
+  date: string;
+  time: string;
   value: number;
   categoryId: number;
 }
@@ -14,37 +19,71 @@ class EntriesController {
 
   constructor(private db: HTTPClient) {
     this.entries = [
-      new Entry(1, new Date(1598131624143), new Date(1598131624143), 1000.0, {
-        id: 1,
-        name: 'Entrada no Caixa',
-        type: CategoryType.EntradaCaixa,
-      }),
-      new Entry(2, new Date(1598121324149), new Date(1598121324149), 1000.0, {
-        id: 4,
-        name: 'Padaria',
-        type: CategoryType.DespesaDiaria,
-      }),
-      new Entry(3, new Date(1598134324443), new Date(1598134324443), 1000.0, {
-        id: 2,
-        name: 'Caixa Final',
-        type: CategoryType.FechamentoCaixa,
-      }),
-      new Entry(4, new Date(), new Date(), 1000.0, {
-        id: 7,
-        name: 'Camarão',
-        type: CategoryType.DespesaFixa,
-      }),
+      new Entry(
+        1,
+        new Date(1598131624143).toISOString(),
+        new Date(1598131624143).toISOString(),
+        1000.0,
+        1,
+        {
+          id: 1,
+          name: 'Entrada no Caixa',
+          type: CategoryType.EntradaCaixa,
+        }
+      ),
+      new Entry(
+        2,
+        new Date(1598121324149).toISOString(),
+        new Date(1598121324149).toISOString(),
+        1000.0,
+        1,
+        {
+          id: 4,
+          name: 'Padaria',
+          type: CategoryType.DespesaDiaria,
+        }
+      ),
+      new Entry(
+        3,
+        new Date(1598134324443).toISOString(),
+        new Date(1598134324443).toISOString(),
+        1000.0,
+        1,
+        {
+          id: 2,
+          name: 'Caixa Final',
+          type: CategoryType.FechamentoCaixa,
+        }
+      ),
+      new Entry(
+        4,
+        new Date().toISOString(),
+        new Date().toISOString(),
+        1000.0,
+        1,
+        {
+          id: 7,
+          name: 'Camarão',
+          type: CategoryType.DespesaFixa,
+        }
+      ),
     ];
   }
 
-  getDailyEntriesByDate(date: Date): Array<Entry> {
-    const dateEntries = this.entries.filter((entry) => {
-      return (
-        getISODate(entry.getDate()) === getISODate(date) &&
-        entry.getCategory().type !== CategoryType.DespesaFixa
-      );
-    }); //Fake Method, should be replaced by API call
-    return dateEntries;
+  async getDailyEntriesByDate(date: Date) {
+    return await this.db.getDailyEntries(getSQLDate(date)).then((response) => {
+      let entryList = response.data.map((entry) => {
+        return new Entry(
+          entry.id,
+          entry.date,
+          entry.time,
+          entry.value,
+          entry.categoryId,
+          entry.category
+        );
+      });
+      return entryList;
+    });
   }
 
   getRegularExpensesEntriesByMonth(date: Date): Array<Entry> {
@@ -57,20 +96,8 @@ class EntriesController {
     return dateEntries;
   }
 
-  addEntry(entryData: EntryDTO) {
-    const newEntry = new Entry(
-      Math.random(),
-      entryData.date,
-      entryData.date,
-      entryData.value,
-      {
-        id: 99,
-        name: 'Categoria Teste',
-        type: CategoryType.DespesaDiaria,
-      }
-    ); //Fake Method, should be replaced by API call
-    this.entries.push(newEntry);
-    return newEntry;
+  async addEntry(entryData: EntryDTO) {
+    return await this.db.addNewEntry(entryData);
   }
 
   removeEntry(idToDelete: number) {

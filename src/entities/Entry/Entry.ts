@@ -2,19 +2,36 @@ import { Category } from '../Category/Category';
 import { getTimeFormated } from '../../services/DateServices';
 
 export class Entry {
+  id: number;
+  date: string;
+  time: string;
+  value: number;
+  categoryId: number;
+  category: Category;
+  jsDate: Date;
+
   constructor(
-    private id: number,
-    private date: Date,
-    private time: Date,
-    private value: number,
-    private category: Category
-  ) {}
+    id: number,
+    date: string,
+    time: string,
+    value: number,
+    categoryId: number,
+    category: Category
+  ) {
+    this.id = id;
+    this.date = date;
+    this.time = time;
+    this.value = value;
+    this.categoryId = categoryId;
+    this.category = category;
+    this.jsDate = new Date(date + ' ' + time);
+  }
 
   getId() {
     return this.id;
   }
   getDate() {
-    return this.date;
+    return this.jsDate;
   }
   getTime() {
     return this.time;
@@ -27,7 +44,7 @@ export class Entry {
   }
 
   getFormatedTime() {
-    return getTimeFormated(this.date);
+    return getTimeFormated(this.jsDate);
   }
   getFormatedDate() {
     return this.date.toLocaleString();

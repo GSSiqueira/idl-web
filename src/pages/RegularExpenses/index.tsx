@@ -10,7 +10,7 @@ import EntriesController, {
 import CategoriesController from '../../controllers/Categories/CategoriesController';
 import CategoriesSelect from '../../components/CategoriesSelect';
 import RegularExpensesTable from './RegularExpensesTable';
-import { getISOMonth, checkSameMonth } from '../../services/DateServices';
+import { getISOMonth, checkSameMonth, getSQLDate, getSQLTime } from '../../services/DateServices';
 import { Category } from '../../entities/Category/Category';
 import { Entry } from '../../entities/Entry/Entry';
 
@@ -71,8 +71,11 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
     event.preventDefault();
     try {
       const newEntryData = validateFieldValues();
-      const newEntry = entriesController.addEntry(newEntryData);
-      setEntryList([...entryList, newEntry]);
+      entriesController.addEntry(newEntryData).then((response)=> {
+        setEntriesDate(entriesDate);
+      }).catch((error)=>{
+      console.log(error.message);
+      });
       clearFields();
     } catch (err) {
       console.log(err.message);
@@ -89,7 +92,8 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
       const values: EntryDTO = {
         value: newValue,
         categoryId: parseInt(selectedCategory),
-        date: new Date(),
+        date: getSQLDate(new Date()),
+        time: getSQLTime(new Date()),
       };
       if (checkSameMonth(entriesDate)) {
         return values;
@@ -98,7 +102,8 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
           'Deseja mesmo adicionar uma entrada para uma outra data ?'
         )
       ) {
-        values.date = entriesDate;
+        values.date = getSQLDate(entriesDate);
+        values.time = getSQLTime(entriesDate);
         return values;
       } else {
         throw new Error('Cancelled by user.');

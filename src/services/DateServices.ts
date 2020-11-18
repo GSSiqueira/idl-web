@@ -23,3 +23,13 @@ export function checkSameMonth(date: Date): boolean {
   let today = new Date();
   return getISOMonth(today) === getISOMonth(date);
 }
+
+export function getSQLDate(date: Date): string {
+  return `${date.getFullYear()}-${date.getMonth() + 1 < 10 ? '0' : ''}${
+    date.getMonth() + 1
+  }-${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
+}
+
+export function getSQLTime(date: Date): string {
+  return `${getTimeFormated(date)}:${date.getSeconds()}`;
+}
