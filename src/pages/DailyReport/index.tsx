@@ -79,6 +79,7 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
     .then((entriesFromApi) => {
       setEntryList(entriesFromApi);
     }).catch((error) => {
+      console.log(error);
       setEntryList([]);
     });
   }
@@ -109,13 +110,13 @@ const DailyReport: React.FC<DailyReportPageProps> = ({
   };
 
   const handleDeleteEntry = (idToDelete: number) => {
-    if (entriesController.removeEntry(idToDelete)) {
-      entriesController
-        .getDailyEntriesByDate(entriesDate)
-        .then((entriesFromApi) => {
-          setEntryList(entriesFromApi);
-        });
-    }
+
+    entriesController.removeEntry(idToDelete).then(response => {
+      getEntriesList();
+    }).catch(error => {
+      console.log(error);
+    })
+
   };
 
   return (

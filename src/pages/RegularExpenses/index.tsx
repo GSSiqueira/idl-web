@@ -56,9 +56,11 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
   };
 
   const handleDeleteEntry = (idToDelete: number) => {
-    if (entriesController.removeEntry(idToDelete)) {
-      getEntriesList();
-    }
+   entriesController.removeEntry(idToDelete).then((response)=>{
+     getEntriesList();
+   }).catch(error => {
+     console.log(error);
+   })
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
