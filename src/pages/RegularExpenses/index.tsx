@@ -35,15 +35,11 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
       .then((categoriesListFromApi) => {
         setCategoryList(categoriesListFromApi);
       });
-    setEntryList(
-      entriesController.getRegularExpensesEntriesByMonth(entriesDate)
-    );
+      getEntriesList();
   }, []);
 
   useEffect(() => {
-    setEntryList(
-      entriesController.getRegularExpensesEntriesByMonth(entriesDate)
-    );
+    getEntriesList();
   }, [entriesDate]);
 
   const handleNewValue = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,9 +57,7 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
 
   const handleDeleteEntry = (idToDelete: number) => {
     if (entriesController.removeEntry(idToDelete)) {
-      setEntryList(
-        entriesController.getRegularExpensesEntriesByMonth(entriesDate)
-      );
+      getEntriesList();
     }
   };
 
@@ -72,7 +66,7 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
     try {
       const newEntryData = validateFieldValues();
       entriesController.addEntry(newEntryData).then((response)=> {
-        setEntriesDate(entriesDate);
+        getEntriesList();
       }).catch((error)=>{
       console.log(error.message);
       });
@@ -81,6 +75,16 @@ const RegularExpenses: React.FC<RegularExpensesPageProps> = ({
       console.log(err.message);
     }
   };
+
+  const getEntriesList = () => {
+    entriesController
+    .getRegularExpensesEntriesByMonth(entriesDate)
+    .then((entriesFromApi) => {
+      setEntryList(entriesFromApi);
+    }).catch((error) => {
+      setEntryList([]);
+    });
+  }
 
   const clearFields = () => {
     setNewValue(0);

@@ -86,14 +86,22 @@ class EntriesController {
     });
   }
 
-  getRegularExpensesEntriesByMonth(date: Date): Array<Entry> {
-    const dateEntries = this.entries.filter((entry) => {
-      return (
-        getISOMonth(entry.getDate()) === getISOMonth(date) &&
-        entry.getCategory().type === CategoryType.DespesaFixa
-      );
-    }); //Fake Method, should be replaced by API call
-    return dateEntries;
+  async getRegularExpensesEntriesByMonth(date: Date) {
+    return await this.db
+      .getRegularExpenseEntries(getSQLDate(date))
+      .then((response) => {
+        let entryList = response.data.map((entry) => {
+          return new Entry(
+            entry.id,
+            entry.date,
+            entry.time,
+            entry.value,
+            entry.categoryId,
+            entry.category
+          );
+        });
+        return entryList;
+      });
   }
 
   async addEntry(entryData: EntryDTO) {

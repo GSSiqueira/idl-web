@@ -35,7 +35,15 @@ export class HTTPClient {
     return this.connection.post<Entry>(`/entradas`, { ...data });
   }
 
+  removeEntry(id: number) {
+    return this.connection.delete(`/entradas/${id}`);
+  }
+
   getDailyEntries(date: string) {
     return this.connection.get<Entry[]>(`/entradas/data/${date}`);
+  }
+
+  getRegularExpenseEntries(date: string) {
+    return this.connection.get<Entry[]>(`/fixos/${date}`);
   }
 }
