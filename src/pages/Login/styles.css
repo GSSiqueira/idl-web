@@ -1,0 +1,28 @@
+.login-content {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.login-content form {
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  #root {
+    justify-content: center;
+  }
+
+  .container {
+    padding-left: 2%;
+  }
+
+  .login-content form .basic-button {
+    margin-top: 1.5rem;
+  }
+}

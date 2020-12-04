@@ -46,4 +46,8 @@ export class HTTPClient {
   getRegularExpenseEntries(date: string) {
     return this.connection.get<Entry[]>(`/fixos/${date}`);
   }
+
+  validateUser(username: string, password: string) {
+    return this.connection.post(`/auth`, { username, password });
+  }
 }

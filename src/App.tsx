@@ -9,11 +9,14 @@ import Home from './pages/Home';
 import DailyReport from './pages/DailyReport';
 import RegularExpenses from './pages/RegularExpenses';
 import { HTTPClient } from './services/HTTPClient';
+import Login from './pages/Login';
+import UsersController from './controllers/Users/UsersController';
 
 function App() {
   const dbConnection = new HTTPClient();
   const entriesController = new EntriesController(dbConnection);
   const categoriesController = new CategoriesController(dbConnection);
+  const usersController = new UsersController(dbConnection);
 
   return (
     <Switch>
@@ -32,6 +35,9 @@ function App() {
           entriesController={entriesController}
           categoriesController={categoriesController}
         />
+      </Route>
+      <Route path="/login">
+        <Login usersController={usersController} />
       </Route>
     </Switch>
   );
