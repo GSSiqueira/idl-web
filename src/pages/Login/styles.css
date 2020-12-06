@@ -13,6 +13,11 @@
   margin: 0;
 }
 
+.login-content .status-message {
+  font-size: 1.5rem;
+  color: red;
+}
+
 @media (min-width: 1024px) {
   #root {
     justify-content: center;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import BasicButton from '../../components/BasicButton';
 import BasicInput from '../../components/BasicInput';
 import UsersController from '../../controllers/Users/UsersController';
@@ -9,6 +10,10 @@ interface LoginPageProps {
 }
 
 const Login: React.FC<LoginPageProps> = ({ usersController }) => {
+  const history = useHistory();
+
+  const [loginStatusMessage, setLoginStatusMessage] = useState('');
+
   const [userName, setUserName] = useState('');
 
   const [password, setPassword] = useState('');
@@ -21,9 +26,14 @@ const Login: React.FC<LoginPageProps> = ({ usersController }) => {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    usersController.validateUserInfo(userName, password);
+    const data = await usersController.validateUserInfo(userName, password);
+    if (data.username) {
+      history.push('/');
+    } else {
+      setLoginStatusMessage(data.message);
+    }
   };
 
   return (
@@ -36,6 +46,7 @@ const Login: React.FC<LoginPageProps> = ({ usersController }) => {
             <p className="content-text">
               Digite o nome de usuário e senha para fazer log in:
             </p>
+            <p className="status-message">{loginStatusMessage}</p>
             <BasicInput
               type="text"
               name="login-username"
