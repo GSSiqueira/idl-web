@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect, RouteProps } from 'react-router-dom';
 
 import EntriesController from './controllers/Entries/EntriesController';
 import CategoriesController from './controllers/Categories/CategoriesController';
@@ -12,6 +12,20 @@ import { HTTPClient } from './services/HTTPClient';
 import Login from './pages/Login';
 import UsersController from './controllers/Users/UsersController';
 
+import { isAuthenticated, logout } from './services/AuthService';
+
+export interface PrivateRouteProps extends RouteProps {
+  isAuth: boolean; // is authenticate route
+  redirectPath: string; // redirect path if don't authenticate route
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
+  return props.isAuth ? (
+    <Route {...props} component={props.component} render={undefined} />
+  ) : (
+    <Redirect to={{ pathname: props.redirectPath }} />
+  );
+};
 function App() {
   const dbConnection = new HTTPClient();
   const entriesController = new EntriesController(dbConnection);
@@ -20,25 +34,52 @@ function App() {
 
   return (
     <Switch>
-      <Route path="/" component={Home} exact />
-      <Route path="/caixa">
+      <PrivateRoute
+        path="/"
+        redirectPath="/login"
+        isAuth={isAuthenticated()}
+        exact
+      >
+        <Home />
+      </PrivateRoute>
+      <PrivateRoute
+        path="/caixa"
+        redirectPath="/login"
+        isAuth={isAuthenticated()}
+      >
         <DailyReport
           entriesController={entriesController}
           categoriesController={categoriesController}
         />
-      </Route>
-      <Route path="/categorias">
+      </PrivateRoute>
+      <PrivateRoute
+        path="/categorias"
+        redirectPath="/login"
+        isAuth={isAuthenticated()}
+      >
         <Categories categoriesController={categoriesController} />
-      </Route>
-      <Route path="/fixos">
+      </PrivateRoute>
+      <PrivateRoute
+        path="/fixos"
+        redirectPath="/login"
+        isAuth={isAuthenticated()}
+      >
         <RegularExpenses
           entriesController={entriesController}
           categoriesController={categoriesController}
         />
-      </Route>
+      </PrivateRoute>
       <Route path="/login">
         <Login usersController={usersController} />
       </Route>
+      <PrivateRoute
+        path="/logout"
+        redirectPath="/login"
+        isAuth={isAuthenticated()}
+      >
+        {logout()}
+        <Login usersController={usersController} />
+      </PrivateRoute>
     </Switch>
   );
 }

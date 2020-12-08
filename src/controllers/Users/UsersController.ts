@@ -11,7 +11,12 @@ class UsersController {
         return loginResponse;
       })
       .catch((error) => {
-        return { message: error.response.data.message, username: '' };
+        return {
+          message: error.response.data.message,
+          username: '',
+          authtoken: '',
+          isAdmin: false,
+        };
       });
 
     return response;
@@ -19,10 +24,10 @@ class UsersController {
 }
 
 interface loginData {
-  username?: string;
-  isAdmin?: boolean;
+  username: string;
+  isAdmin: boolean;
   message: string;
-  authtoken?: string;
+  authtoken: string;
 }
 
 export default UsersController;

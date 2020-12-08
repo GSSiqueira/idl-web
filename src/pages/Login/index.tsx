@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import BasicButton from '../../components/BasicButton';
 import BasicInput from '../../components/BasicInput';
 import UsersController from '../../controllers/Users/UsersController';
+import { isAuthenticated, login, logout } from '../../services/AuthService';
 import './styles.css';
 
 interface LoginPageProps {
@@ -30,6 +31,7 @@ const Login: React.FC<LoginPageProps> = ({ usersController }) => {
     event.preventDefault();
     const data = await usersController.validateUserInfo(userName, password);
     if (data.username) {
+      login(data.authtoken);
       history.push('/');
     } else {
       setLoginStatusMessage(data.message);

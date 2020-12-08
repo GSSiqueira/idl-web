@@ -56,7 +56,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/login">
+            <Link to="/logout">
               <FontAwesomeIcon icon={faPowerOff} />
               Logout
             </Link>

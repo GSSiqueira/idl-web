@@ -3,6 +3,7 @@ import { CategoryDTO } from '../controllers/Categories/CategoriesController';
 import { EntryDTO } from '../controllers/Entries/EntriesController';
 import { Category } from '../entities/Category/Category';
 import { Entry } from '../entities/Entry/Entry';
+import { getToken } from './AuthService';
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> {}
@@ -16,6 +17,14 @@ export class HTTPClient {
       baseURL: 'http://localhost:3030',
       timeout: 20000,
       headers: { 'X-Custom-Header': 'foobar' },
+    });
+
+    this.connection.interceptors.request.use(async (config) => {
+      const token = getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
     });
   }
 
