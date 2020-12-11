@@ -8,9 +8,10 @@ import './styles.css';
 
 interface LoginPageProps {
   usersController: UsersController;
+  redirectHome: () => void;
 }
 
-const Login: React.FC<LoginPageProps> = ({ usersController }) => {
+const Login: React.FC<LoginPageProps> = ({ usersController, redirectHome }) => {
   const history = useHistory();
 
   const [loginStatusMessage, setLoginStatusMessage] = useState('');
@@ -18,6 +19,10 @@ const Login: React.FC<LoginPageProps> = ({ usersController }) => {
   const [userName, setUserName] = useState('');
 
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    logout();
+  }, []);
 
   const handleNewUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
@@ -32,7 +37,8 @@ const Login: React.FC<LoginPageProps> = ({ usersController }) => {
     const data = await usersController.validateUserInfo(userName, password);
     if (data.username) {
       login(data.authtoken);
-      history.push('/');
+      redirectHome();
+      //setLoginStatusMessage(data.message);
     } else {
       setLoginStatusMessage(data.message);
     }

@@ -26,7 +26,12 @@ const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
     <Redirect to={{ pathname: props.redirectPath }} />
   );
 };
-function App() {
+
+interface AppProps {
+  redirectHome: () => void;
+}
+
+const App: React.FC<AppProps> = ({ redirectHome }) => {
   const dbConnection = new HTTPClient();
   const entriesController = new EntriesController(dbConnection);
   const categoriesController = new CategoriesController(dbConnection);
@@ -70,18 +75,14 @@ function App() {
         />
       </PrivateRoute>
       <Route path="/login">
-        <Login usersController={usersController} />
+        <Login usersController={usersController} redirectHome={redirectHome} />
       </Route>
-      <PrivateRoute
-        path="/logout"
-        redirectPath="/login"
-        isAuth={isAuthenticated()}
-      >
-        {logout()}
-        <Login usersController={usersController} />
-      </PrivateRoute>
+      <Route path="/logout">
+        {/* {logout()} */}
+        <Redirect to="/login" />
+      </Route>
     </Switch>
   );
-}
+};
 
 export default App;
